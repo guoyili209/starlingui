@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="source" type="flex">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../libs/feathers-ui-4.1.1/source" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

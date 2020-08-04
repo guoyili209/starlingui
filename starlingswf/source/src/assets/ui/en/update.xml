@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<comps>
+	<Window id="window" title="Updater" hasCloseButton="true" draggable="true" width="230" height="90" event="close:onClose">
+		<VBox x="12" y="8">
+			<HBox>
+				<Label text="New version available, update now?"/>
+			</HBox>
+			<HBox>
+				<PushButton id="yesBtn" label="Yes" event="click:onYes"/>
+				<PushButton id="noBtn" label="No" event="click:onNo"/>
+			</HBox>
+		</VBox>
+	</Window>
+</comps>

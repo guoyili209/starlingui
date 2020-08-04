@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<comps>
+	<Panel width="230" height="680">
+		<VBox x="6" y="10" spacing="6">
+			<Label text="Component属性"/>
+			<PushButton label="保存" event="click:onSave" />
+			<PushButton label="测试" event="click:onTest" />
+			<Label text="----------------------------"/>
+		</VBox>
+	</Panel>
+</comps>

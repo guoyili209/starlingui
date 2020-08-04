@@ -1,0 +1,6 @@
+Text for return in starling.utils:Color/rgbToHsl is not valid.
+org.xml.sax.SAXParseException; lineNumber: 1; columnNumber: 44; The entity name must immediately follow the '&' in the entity reference.
+
+Text for return in starling.utils:Color/rgbToHsv is not valid.
+org.xml.sax.SAXParseException; lineNumber: 1; columnNumber: 44; The entity name must immediately follow the '&' in the entity reference.
+

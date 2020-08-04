@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<comps>
+	<Window id="window" title="Export Options" hasCloseButton="true" draggable="true" width="418" height="238" event="close:onClose">
+		<VBox x="12" y="8">
+			<HBox>
+				<Label text="Scale"/>
+				<NumericStepper id="exportScale" value="1" minimum="1"/>
+			</HBox>
+			<HBox>
+				<Label text="Pack Texture:"/>
+				<CheckBox id="isMerger" selected="true"/>
+				<Label text="Batch Export"/>
+				<CheckBox id="isBat" selected="false"/>
+			</HBox>
+			<HBox>
+				<Label text="Generate TextureAtlas"/>
+				<CheckBox id="isMergerBigImage" selected="false"/>
+			</HBox>
+			<HBox>
+				<Label text="Clip Transparent Part"/>
+				<CheckBox id="isAnySize" selected="true"/>
+			</HBox>
+			<HBox>
+				<Label text="Big Image Width"/>
+				<InputText id="bigImageWidth" text="150" width="92" restrict="0-9" />
+			</HBox>
+			<HBox>
+				<Label text="Big Image Height"/>
+				<InputText id="bigImageHeight" text="150" width="92" restrict="0-9" />
+			</HBox>
+			<HBox>
+				<Label text="Padding"/>
+				<NumericStepper id="paddingValue" value="2" minimum="1"/>
+			</HBox>
+			<HBox>
+				<Label text="format:"/>
+				<ComboBox id="exportPlatform" width="90"/>
+			</HBox>
+			<PushButton id="exportBtn" label="Export" event="click:onExport"/>
+		</VBox>
+		<Panel x="216" y="8" height="176" width="192" autoHideScrollBar="true">
+			<TextArea id="infoText" text="BigImage: Images that are larger than (ImageWidth*Scale)*(ImageHeight*Scale) are big images" width="192" height="176" editable="false">
+			</TextArea>
+		</Panel>
+	</Window>
+</comps>

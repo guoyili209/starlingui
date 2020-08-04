@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<comps>
+	<Window id="window" title="导出选项" hasCloseButton="true" draggable="true" width="368" height="238" event="close:onClose">
+		<VBox x="12" y="8">
+			<HBox>
+				<Label text="导出倍数:"/>
+				<NumericStepper id="exportScale" value="1" minimum="1"/>
+			</HBox>
+			<HBox>
+				<Label text="合并纹理:"/>
+				<CheckBox id="isMerger" selected="true"/>
+				<Label text="批量导出:"/>
+				<CheckBox id="isBat" selected="false"/>
+			</HBox>
+			<HBox>
+				<Label text="是否合并大图:"/>
+				<CheckBox id="isMergerBigImage" selected="false"/>
+			</HBox>
+			<HBox>
+				<Label text="裁切纹理集透明区域:"/>
+				<CheckBox id="isAnySize" selected="true"/>
+			</HBox>
+			<HBox>
+				<Label text="大图宽:"/>
+				<InputText id="bigImageWidth" text="150" width="92" restrict="0-9" />
+			</HBox>
+			<HBox>
+				<Label text="大图高:"/>
+				<InputText id="bigImageHeight" text="150" width="92" restrict="0-9" />
+			</HBox>
+			<HBox>
+				<Label text="纹理间距:"/>
+				<NumericStepper id="paddingValue" value="2" minimum="1"/>
+			</HBox>
+			<HBox>
+				<Label text="format:"/>
+				<ComboBox id="exportPlatform" width="90"/>
+			</HBox>
+			<PushButton id="exportBtn" label="导出" event="click:onExport"/>
+		</VBox>
+		<Panel x="166" y="8" height="176" width="192" autoHideScrollBar="true">
+			<TextArea id="infoText" text="大图说明:图片尺寸大于(大图宽*导出倍数)*(大图高*导出倍数)的图片，算作大图" width="192" height="176" editable="false">
+			</TextArea>
+		</Panel>
+	</Window>
+</comps>

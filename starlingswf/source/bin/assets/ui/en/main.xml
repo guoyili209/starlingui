@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<comps>
+	<Panel width="1024" height="120">
+		<VBox x="10" y="10" spacing="6">
+			<HBox>
+				<PushButton id="selectSwfSource" label="Select Swf" event="click:onSelectSwfSource"/>
+				<PushButton id="refreshSwfSource" label="Refresh" event="click:onRefreshSwfSource" enabled="false"/>
+				<Label text="Switch SWF:"/>
+				<ComboBox id="switchSwf" width="180" enabled="false" event="select:onSwitchSwf" />
+				<PushButton id="openAtfTool" label="ATF Tool" event="click:onOpenAtfTool"/>
+				<PushButton id="openTutorials" label="Tutorial" event="click:onOpenTutorials"/>
+				<PushButton id="openMoney" label="Donation" event="click:onOpenMoney"/>
+				<PushButton id="openAlipay" label="Donation(Alipay)" event="click:onOpenAlipay"/>
+			</HBox>
+			<HBox x="10" y="10" spacing="6">
+				<PushButton id="addCustomComponents" label="Custom Comp" event="click:onAddCustomComponents"/>
+			</HBox>
+			<HBox x="10" y="10" spacing="6">
+				<Label text="Preview Type:"/>
+				<ComboBox id="compNames" width="180" enabled="false" event="select:onSelectCompName" />
+				<Label text="Preview Instance"/>
+				<ComboBox id="comps" width="180" enabled="false" event="select:onSelectComp" />
+			</HBox>
+			<HBox spacing="16">
+				<HBox>
+					<Label text="Background Color:"/>
+					<ColorChooser id="bgColor" usePopup="true" value="0x999999" event="change:onColorChange" />
+				</HBox>
+				<HBox>
+				<Label text="Draggable"/>
+					<CheckBox id="isDrag" selected="true" event="click:onIsDrag"/>
+				</HBox>
+				<HUISlider label="FPS" enabled="false" id="fpsValue" value="24" maximum="60" minimum="24" event="change:onFpsChange"/>
+				<HBox>
+					<Label text="Import Scale"/>
+					<InputText id="swfScale" text="1" width="50" />
+				</HBox>
+				<PushButton id="exportBtn" label="Export" event="click:onExportBtn" enabled="false"/>
+				<Label id="versionText"/>
+			</HBox>
+		</VBox>
+	</Panel>
+</comps>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<comps>
+	<Panel width="1024" height="120">
+		<VBox x="10" y="10" spacing="6">
+			<HBox>
+				<PushButton id="selectSwfSource" label="选择Swf" event="click:onSelectSwfSource"/>
+				<PushButton id="refreshSwfSource" label="刷新" event="click:onRefreshSwfSource" enabled="false"/>
+				<Label text="切换SWF:"/>
+				<ComboBox id="switchSwf" width="180" enabled="false" event="select:onSwitchSwf" />
+				<PushButton id="openAtfTool" label="ATF工具" event="click:onOpenAtfTool"/>
+				<PushButton id="openTutorials" label="工具教程" event="click:onOpenTutorials"/>
+				<PushButton id="openMoney" label="贡献" event="click:onOpenMoney"/>
+				<PushButton id="openAlipay" label="资金捐助" event="click:onOpenAlipay"/>
+			</HBox>
+			<HBox x="10" y="10" spacing="6">
+				<PushButton id="addCustomComponents" label="添加自定义组件" event="click:onAddCustomComponents"/>
+			</HBox>
+			<HBox x="10" y="10" spacing="6">
+				<Label text="选择预览类型:"/>
+				<ComboBox id="compNames" width="180" enabled="false" event="select:onSelectCompName" />
+				<Label text="选择预览实体:"/>
+				<ComboBox id="comps" width="180" enabled="false" event="select:onSelectComp" />
+			</HBox>
+			<HBox spacing="16">
+				<HBox>
+					<Label text="背景颜色:"/>
+					<ColorChooser id="bgColor" usePopup="true" value="0x999999" event="change:onColorChange" />
+				</HBox>
+				<HBox>
+				<Label text="是否可拖动:"/>
+					<CheckBox id="isDrag" selected="true" event="click:onIsDrag"/>
+				</HBox>
+				<HUISlider label="Swf帧率:" enabled="false" id="fpsValue" value="24" maximum="60" minimum="24" event="change:onFpsChange"/>
+				<HBox>
+					<Label text="swf倒入倍数:"/>
+					<InputText id="swfScale" text="1" width="50" />
+				</HBox>
+				<PushButton id="exportBtn" label="导出" event="click:onExportBtn" enabled="false"/>
+				<Label id="versionText"/>
+			</HBox>
+		</VBox>
+	</Panel>
+</comps>
