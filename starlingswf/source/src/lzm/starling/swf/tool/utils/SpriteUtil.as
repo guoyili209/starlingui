@@ -18,97 +18,97 @@ package lzm.starling.swf.tool.utils
          super();
       }
       
-      public static function getSpriteInfo(param1:String, param2:Class) : Array
+      public static function getSpriteInfo(name:String, linkClass:Class) : Array
       {
-         var _loc3_:* = null;
-         var _loc10_:* = null;
-         var _loc4_:* = null;
-         var _loc7_:* = null;
-         var _loc14_:* = null;
-         var _loc8_:* = null;
-         var _loc5_:* = null;
-         var _loc9_:int = 0;
+         var itemData:Array = null;
+         var displayObj:DisplayObject = null;
+         var className:String = null;
+         var type:String = null;
+         var filterArr:Array = null;
+         var filterObj:Object = null;
+         var filterClassName:* = null;
+         var index:int = 0;
          var _loc6_:int = 0;
-         var _loc11_:MovieClip = new param2();
-         Starup.tempContent.addChild(_loc11_);
-         var _loc12_:int = _loc11_.numChildren;
-         var _loc13_:Array = [];
-         _loc9_ = 0;
-         while(_loc9_ < _loc12_)
+         var mc:MovieClip = new linkClass();
+         Starup.tempContent.addChild(mc);
+         var len:int = mc.numChildren;
+         var dataArr:Array = [];
+         index = 0;
+         while(index < len)
          {
-            _loc10_ = _loc11_.getChildAt(_loc9_) as DisplayObject;
-            _loc4_ = getQualifiedClassName(_loc10_);
-            _loc7_ = SwfUtil.getChildType(_loc4_);
-            if(_loc7_ != null)
+            displayObj = mc.getChildAt(index) as DisplayObject;
+            className = getQualifiedClassName(displayObj);
+            type = SwfUtil.getChildType(className);
+            if(type != null)
             {
-               _loc3_ = [_loc4_,_loc7_,Util.formatNumber(_loc10_.x * Util.swfScale),Util.formatNumber(_loc10_.y * Util.swfScale),Util.formatNumber(_loc10_.scaleX),Util.formatNumber(_loc10_.scaleY),_loc10_.transform.matrix == null?0:Number(MatrixUtils.getSkewX(_loc10_.transform.matrix)),_loc10_.transform.matrix == null?0:Number(MatrixUtils.getSkewY(_loc10_.transform.matrix)),_loc10_.alpha];
-               if(_loc10_.name.indexOf("instance") == -1)
+               itemData = [className,type,Util.formatNumber(displayObj.x * Util.swfScale),Util.formatNumber(displayObj.y * Util.swfScale),Util.formatNumber(displayObj.scaleX),Util.formatNumber(displayObj.scaleY),displayObj.transform.matrix == null?0:Number(MatrixUtils.getSkewX(displayObj.transform.matrix)),displayObj.transform.matrix == null?0:Number(MatrixUtils.getSkewY(displayObj.transform.matrix)),displayObj.alpha];
+               if(displayObj.name.indexOf("instance") == -1)
                {
-                  _loc3_.push(_loc10_.name);
+                  itemData.push(displayObj.name);
                }
                else
                {
-                  _loc3_.push("");
+                  itemData.push("");
                }
-               if(_loc7_ == "s9" || _loc7_ == "shapeImg")
+               if(type == "s9" || type == "shapeImg")
                {
-                  _loc3_.push(Util.formatNumber(_loc10_.width * Util.swfScale));
-                  _loc3_.push(Util.formatNumber(_loc10_.height * Util.swfScale));
+                  itemData.push(Util.formatNumber(displayObj.width * Util.swfScale));
+                  itemData.push(Util.formatNumber(displayObj.height * Util.swfScale));
                }
-               else if(_loc7_ == "text")
+               else if(type == "text")
                {
-                  var _loc15_:* = _loc7_;
-                  _loc3_[0] = _loc15_;
-                  _loc4_ = _loc15_;
-                  _loc3_.push((_loc10_ as TextField).width);
-                  _loc3_.push((_loc10_ as TextField).height);
-                  _loc3_.push((_loc10_ as TextField).defaultTextFormat.font);
-                  _loc3_.push((_loc10_ as TextField).defaultTextFormat.color);
-                  _loc3_.push((_loc10_ as TextField).defaultTextFormat.size);
-                  _loc3_.push((_loc10_ as TextField).defaultTextFormat.align);
-                  _loc3_.push((_loc10_ as TextField).defaultTextFormat.italic);
-                  _loc3_.push((_loc10_ as TextField).defaultTextFormat.bold);
-                  _loc3_.push((_loc10_ as TextField).text);
-                  _loc14_ = _loc10_.filters;
-                  _loc8_ = {};
+                  var _loc15_:* = type;
+                  itemData[0] = _loc15_;
+                  className = _loc15_;
+                  itemData.push((displayObj as TextField).width);
+                  itemData.push((displayObj as TextField).height);
+                  itemData.push((displayObj as TextField).defaultTextFormat.font);
+                  itemData.push((displayObj as TextField).defaultTextFormat.color);
+                  itemData.push((displayObj as TextField).defaultTextFormat.size);
+                  itemData.push((displayObj as TextField).defaultTextFormat.align);
+                  itemData.push((displayObj as TextField).defaultTextFormat.italic);
+                  itemData.push((displayObj as TextField).defaultTextFormat.bold);
+                  itemData.push((displayObj as TextField).text);
+                  filterArr = displayObj.filters;
+                  filterObj = {};
                   _loc6_ = 0;
-                  while(_loc6_ < _loc14_.length)
+                  while(_loc6_ < filterArr.length)
                   {
-                     _loc5_ = getQualifiedClassName(_loc14_[_loc6_]);
-                     if(SwfFilter.filters.indexOf(_loc5_) != -1)
+                     filterClassName = getQualifiedClassName(filterArr[_loc6_]);
+                     if(SwfFilter.filters.indexOf(filterClassName) != -1)
                      {
-                        _loc8_[_loc5_] = _loc14_[_loc6_].clone();
+                        filterObj[filterClassName] = filterArr[_loc6_].clone();
                      }
                      _loc6_++;
                   }
-                  _loc3_.push(_loc8_);
+                  itemData.push(filterObj);
                }
-               else if(_loc7_ == "comp")
+               else if(type == "comp")
                {
-                  _loc3_.push(Assets.getTempData(param1 + "-" + _loc9_ + _loc4_));
+                  itemData.push(Assets.getTempData(name + "-" + index + className));
                }
-               if(_loc7_ != "text")
+               if(type != "text")
                {
-                  _loc14_ = _loc10_.filters;
-                  if(_loc14_.length > 0)
+                  filterArr = displayObj.filters;
+                  if(filterArr.length > 0)
                   {
-                     _loc5_ = getQualifiedClassName(_loc14_[0]);
-                     _loc8_ = {};
-                     _loc8_[_loc5_] = _loc14_[0].clone();
-                     _loc3_.push(_loc8_);
+                     filterClassName = getQualifiedClassName(filterArr[0]);
+                     filterObj = {};
+                     filterObj[filterClassName] = filterArr[0].clone();
+                     itemData.push(filterObj);
                   }
                   else
                   {
-                     _loc3_.push(null);
+                     itemData.push(null);
                   }
                }
-               _loc3_.push(_loc10_.blendMode);
-               _loc13_.push(_loc3_);
+               itemData.push(displayObj.blendMode);
+               dataArr.push(itemData);
             }
-            _loc9_++;
+            index++;
          }
-         Starup.tempContent.removeChild(_loc11_);
-         return _loc13_;
+         Starup.tempContent.removeChild(mc);
+         return dataArr;
       }
    }
 }

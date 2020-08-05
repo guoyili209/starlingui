@@ -138,7 +138,7 @@ package lzm.starling.swf.tool.utils
             }
             var _loc33_:int = 0;
             var _loc32_:* = _loc20_;
-            for(var _loc16_ in _loc20_)
+            for(var _loc16_:* in _loc20_)
             {
                _loc20_[_loc16_] = [SwfUtil.getChildType(_loc16_),_loc20_[_loc16_]];
             }

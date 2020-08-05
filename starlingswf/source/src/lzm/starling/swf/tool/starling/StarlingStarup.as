@@ -46,7 +46,7 @@ package lzm.starling.swf.tool.starling
       {
          removeEventListener("addedToStage",addToStage);
          STLConstant.nativeStage = stage;
-//         Starling.handleLostContext = !Mobile.isIOS();
+      //   Starling.handleLostContext = !Mobile.isIOS();
          var viewPort:Rectangle = new Rectangle(0,121,w,h);
          STLConstant.StageWidth = viewPort.width;
          STLConstant.StageHeight = viewPort.height;

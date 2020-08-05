@@ -20,7 +20,7 @@ package lzm.starling.swf.tool.utils
          var _loc1_:String = "";
          var _loc5_:int = 0;
          var _loc4_:* = _loc3_;
-         for each(var _loc2_ in _loc3_)
+         for each(var _loc2_:* in _loc3_)
          {
             _loc1_ = _loc1_ + _loc2_.hardwareAddress;
          }

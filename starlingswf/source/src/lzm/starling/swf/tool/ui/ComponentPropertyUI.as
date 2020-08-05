@@ -61,7 +61,7 @@ package lzm.starling.swf.tool.ui
          var _loc3_:Object = {};
          var _loc6_:int = 0;
          var _loc5_:* = _propertiesComponents;
-         for(var _loc4_ in _propertiesComponents)
+         for(var _loc4_:* in _propertiesComponents)
          {
             _loc1_ = _propertiesComponents[_loc4_][0];
             _loc2_ = _propertiesComponents[_loc4_][1];

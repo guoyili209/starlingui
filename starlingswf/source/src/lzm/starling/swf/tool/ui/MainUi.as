@@ -88,26 +88,24 @@ package lzm.starling.swf.tool.ui {
         }
 
         public function onSelectSwfSource(param1:Event):void {
-            var _loc3_:String = LSOManager.get("oldSelectFilesPath");
-            var _loc2_:File = _loc3_ == null ? new File() : new File(_loc3_);
-            _loc2_.browseForOpenMultiple("选择swf", [new FileFilter("Flash", "*.swf")]);
-            _loc2_.addEventListener("selectMultiple", selectSwfOK);
+            var file:File = new File();
+            file.browseForOpenMultiple("选择swf", [new FileFilter("Flash", "*.swf")]);
+            file.addEventListener("selectMultiple", selectSwfOK);
         }
 
-        private function selectSwfOK(param1:Event):void {
-            var _loc2_:* = null;
-            var _loc4_:int = 0;
-            param1.target.removeEventListener("select", selectSwfOK);
-            _selectFiles = param1["files"];
+        private function selectSwfOK(e:Event):void {
+            var file:File = null;
+            var index:int = 0;
+            e.target.removeEventListener("select", selectSwfOK);
+            _selectFiles = e["files"];
             _selectFileNames = [];
-            var _loc3_:int = _selectFiles.length;
-            _loc4_ = 0;
-            while (_loc4_ < _loc3_) {
-                _loc2_ = _selectFiles[_loc4_];
-                _selectFileNames.push(_loc2_.name.split(".")[0]);
-                _loc4_++;
+            var len:int = _selectFiles.length;
+            index = 0;
+            while (index < len) {
+                file = _selectFiles[index];
+                _selectFileNames.push(file.name.split(".")[0]);
+                index++;
             }
-            LSOManager.put("oldSelectFilesPath", _loc2_.parent.url);
             _switchSwfComboBox.enabled = true;
             _switchSwfComboBox.items = _selectFileNames;
             _switchSwfComboBox.selectedIndex = 0;
@@ -115,9 +113,9 @@ package lzm.starling.swf.tool.ui {
 
         private function loadSwf():void {
             Loading.instance.show();
-            var _loc1_:Loader = new Loader();
-            _loc1_.contentLoaderInfo.addEventListener("complete", loadSwfComplete);
-            _loc1_.load(new URLRequest(currentSelectFileUrl));
+            var loader:Loader = new Loader();
+            loader.contentLoaderInfo.addEventListener("complete", loadSwfComplete);
+            loader.load(new URLRequest(currentSelectFileUrl));
         }
 
         private function loadSwfComplete(param1:Event):void {
@@ -158,22 +156,21 @@ package lzm.starling.swf.tool.ui {
             loaderInfo.loader.unloadAndStop();
         }
 
-        public function onRefreshSwfSource(param1:Event):void {
+        public function onRefreshSwfSource(e:Event):void {
 //         dispatchEvent(new UIEvent("onRefresh"));
             loadSwf();
         }
 
         public function onSwitchSwf(e:Event):void {
             Assets.openTempFile(currentSelectFileUrl, function():void {
-                onRefreshSwfSource(null);
+            onRefreshSwfSource(null);
             });
         }
 
-        public function onAddCustomComponents(param1:Event):void {
-            var _loc3_:String = LSOManager.get("oldComponentsPath");
-            var _loc2_:File = _loc3_ == null ? new File() : new File(_loc3_);
-            _loc2_.browseForOpenMultiple("选择swf", [new FileFilter("Flash", "*.swf")]);
-            _loc2_.addEventListener("selectMultiple", addCustomComponentsOK);
+        public function onAddCustomComponents(e:Event):void {
+            var file:File = new File();
+            file.browseForOpenMultiple("选择swf", [new FileFilter("Flash", "*.swf")]);
+            file.addEventListener("selectMultiple", addCustomComponentsOK);
         }
 
         private function addCustomComponentsOK(param1:Event):void {
@@ -188,7 +185,6 @@ package lzm.starling.swf.tool.ui {
                 _loc5_.push(_loc3_.url);
                 _loc4_++;
             }
-            LSOManager.put("oldComponentsPath", _loc3_.parent.url);
             Assets.componentsAsset.addComponents(_loc5_);
         }
 

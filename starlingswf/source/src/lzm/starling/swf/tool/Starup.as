@@ -135,7 +135,7 @@ package lzm.starling.swf.tool
       {
          var addEvent:* = function(param1:ISwfComponent):void
          {
-            var component = param1;
+            var component:ISwfComponent = param1;
          };
          var numChildren:int = sprite.numChildren;
          var i:int = 0;

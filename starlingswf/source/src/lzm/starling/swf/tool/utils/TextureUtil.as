@@ -25,7 +25,7 @@ package lzm.starling.swf.tool.utils
          var _loc10_:int = 0;
          var _loc21_:int = 0;
          var _loc20_:* = param3;
-         for each(var _loc9_ in param3)
+         for each(var _loc9_:* in param3)
          {
          }
          if(!_loc9_)
@@ -149,7 +149,7 @@ package lzm.starling.swf.tool.utils
          var _loc3_:uint = 0;
          var _loc6_:int = 0;
          var _loc5_:* = param1;
-         for each(var _loc2_ in param1)
+         for each(var _loc2_:* in param1)
          {
             if(_loc2_.height > _loc3_)
             {
@@ -166,7 +166,7 @@ package lzm.starling.swf.tool.utils
          var _loc3_:* = 4294967295;
          var _loc6_:int = 0;
          var _loc5_:* = param1;
-         for each(var _loc2_ in param1)
+         for each(var _loc2_:* in param1)
          {
             if(_loc2_.height < _loc3_)
             {
