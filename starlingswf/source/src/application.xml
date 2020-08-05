@@ -26,8 +26,8 @@
 		<!-- <softKeyboardBehavior></softKeyboardBehavior> -->
 		<!-- <requestedDisplayResolution></requestedDisplayResolution> -->
 		<title>StarlingUI</title>
-		<width>1920</width>
-		<height>1080</height>
+		<width>1280</width>
+		<height>800</height>
 		<autoOrients>false</autoOrients>
         <fullScreen>false</fullScreen>
         <visible>true</visible>

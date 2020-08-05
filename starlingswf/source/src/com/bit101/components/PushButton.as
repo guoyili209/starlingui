@@ -31,6 +31,7 @@ package com.bit101.components
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.text.TextField;
 
 	public class PushButton extends Component
 	{

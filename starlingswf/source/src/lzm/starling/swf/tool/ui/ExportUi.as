@@ -85,8 +85,7 @@ package lzm.starling.swf.tool.ui
          var _loc3_:String = LSOManager.get("oldExportPath");
          var _loc2_:File = _loc3_ == null?new File():new File(_loc3_);
          _loc2_.browseForDirectory("输出路径");
-         _loc2_.addEventListener("select",selectExportPathOk);
-         trace("输出路径");
+         _loc2_.addEventListener("select",selectExportPathOk);         
       }
       
       private function selectExportPathOk(param1:Event) : void
@@ -94,11 +93,10 @@ package lzm.starling.swf.tool.ui
          var _loc2_:File = param1.target as File;
          _loc2_.removeEventListener("select",selectExportPathOk);
          _exportPath = _loc2_.url;
-         LSOManager.put("oldExportPath",_exportPath);
          dispatchEvent(new Event("export"));
-         onClose(null);
-         trace("path ok");
+         onClose(null);         
       }
+      
       
       public function get isMerger() : Boolean
       {

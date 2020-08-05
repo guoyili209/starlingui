@@ -6,16 +6,16 @@ package lzm.starling.swf.tool.ui {
     import com.bit101.components.InputText;
     import com.bit101.components.Label;
     import com.bit101.components.PushButton;
-    
+
     import flash.display.Loader;
     import flash.display.LoaderInfo;
     import flash.events.Event;
     import flash.filesystem.File;
     import flash.net.FileFilter;
     import flash.net.URLRequest;
-    
+
     import lzm.atf.tool.ATFTool;
-    
+
     import lzm.starling.swf.Swf;
     import lzm.starling.swf.tool.asset.Assets;
     import lzm.starling.swf.tool.utils.ImageUtil;
@@ -23,44 +23,45 @@ package lzm.starling.swf.tool.ui {
     import lzm.starling.swf.tool.utils.Util;
     import lzm.util.LSOManager;
     import lzm.starling.swf.tool.utils.ExportUtil;
-    
+
     import starling.core.Starling;
     import starling.textures.Texture
-    
+
     public class MainUi extends BaseUI {
-        
-        
+
+
         private var _compNames:Array;
-        
+
         private var _compSelectEvents:Array;
-        
+
         private var _comps:Array;
-        
+
         private var _selectSwfSource:PushButton;
-        
+
         private var _refreshSwfSource:PushButton;
-        
+
         private var _switchSwfComboBox:ComboBox;
-        
+
         private var _compNamesComboBox:ComboBox;
-        
+
         private var _compsComboBox:ComboBox;
-        
+
         private var _bgColorChooser:ColorChooser;
-        
+
         private var _fpsValue:HUISlider;
-        
+
         private var _exportBtn:PushButton;
-        
+
         private var _exportOption:ExportUi;
+
         private var _exportUtil:ExportUtil;
-        
+
         private var _selectFiles:Array;
-        
+
         private var _selectFileNames:Array;
-        
+
         private var _atfTool:ATFTool;
-        
+
         public function MainUi() {
             _compNames = ["Image", "Sprite", "MovieClip", "Button", "S9Image", "ShapeImage", "Component", "Particle"];
             _compSelectEvents = ["selectImage", "selectSprite", "selectMovieClip", "selectButton", "selectScale9", "selectShapeImage", "selectComponents", "selectParticle"];
@@ -69,9 +70,8 @@ package lzm.starling.swf.tool.ui {
             _exportOption.addEventListener("export", export);
             loadUi("main.xml");
             this._exportUtil = new ExportUtil();
-            trace("xxxx");
         }
-        
+
         override protected function loadXMLComplete(param1:Event):void {
             _selectSwfSource = uiConfig.getCompById("selectSwfSource") as PushButton;
             _refreshSwfSource = uiConfig.getCompById("refreshSwfSource") as PushButton;
@@ -83,17 +83,17 @@ package lzm.starling.swf.tool.ui {
             _fpsValue.value = 30;
             _exportBtn = uiConfig.getCompById("exportBtn") as PushButton;
             var _loc2_:PushButton = uiConfig.getCompById("openAlipay") as PushButton;
-//         _loc2_.labelComponent.textField.textColor = 16711680;
+            // _loc2_.labelComponent.textField.textColor = 16711680;
             (uiConfig.getCompById("versionText") as Label).text = "V" + SysUtils.version;
         }
-        
+
         public function onSelectSwfSource(param1:Event):void {
             var _loc3_:String = LSOManager.get("oldSelectFilesPath");
             var _loc2_:File = _loc3_ == null ? new File() : new File(_loc3_);
             _loc2_.browseForOpenMultiple("选择swf", [new FileFilter("Flash", "*.swf")]);
             _loc2_.addEventListener("selectMultiple", selectSwfOK);
         }
-        
+
         private function selectSwfOK(param1:Event):void {
             var _loc2_:* = null;
             var _loc4_:int = 0;
@@ -112,14 +112,14 @@ package lzm.starling.swf.tool.ui {
             _switchSwfComboBox.items = _selectFileNames;
             _switchSwfComboBox.selectedIndex = 0;
         }
-        
+
         private function loadSwf():void {
             Loading.instance.show();
             var _loc1_:Loader = new Loader();
             _loc1_.contentLoaderInfo.addEventListener("complete", loadSwfComplete);
             _loc1_.load(new URLRequest(currentSelectFileUrl));
         }
-        
+
         private function loadSwfComplete(param1:Event):void {
             var imgName:* = null;
             var index:int = 0;
@@ -157,25 +157,25 @@ package lzm.starling.swf.tool.ui {
             _compsComboBox.enabled = false;
             loaderInfo.loader.unloadAndStop();
         }
-        
+
         public function onRefreshSwfSource(param1:Event):void {
 //         dispatchEvent(new UIEvent("onRefresh"));
             loadSwf();
         }
-        
+
         public function onSwitchSwf(e:Event):void {
-            Assets.openTempFile(currentSelectFileUrl, function ():void {
+            Assets.openTempFile(currentSelectFileUrl, function():void {
                 onRefreshSwfSource(null);
             });
         }
-        
+
         public function onAddCustomComponents(param1:Event):void {
             var _loc3_:String = LSOManager.get("oldComponentsPath");
             var _loc2_:File = _loc3_ == null ? new File() : new File(_loc3_);
             _loc2_.browseForOpenMultiple("选择swf", [new FileFilter("Flash", "*.swf")]);
             _loc2_.addEventListener("selectMultiple", addCustomComponentsOK);
         }
-        
+
         private function addCustomComponentsOK(param1:Event):void {
             var _loc3_:* = null;
             var _loc4_:int = 0;
@@ -191,7 +191,7 @@ package lzm.starling.swf.tool.ui {
             LSOManager.put("oldComponentsPath", _loc3_.parent.url);
             Assets.componentsAsset.addComponents(_loc5_);
         }
-        
+
         public function onSelectCompName(param1:Event):void {
             if (_compNamesComboBox.selectedIndex == -1) {
                 return;
@@ -202,13 +202,12 @@ package lzm.starling.swf.tool.ui {
             if (_loc2_.length > 0) {
                 _compsComboBox.items = _loc2_;
                 _compsComboBox.enabled = true;
-            }
-            else {
+            } else {
                 _compsComboBox.items = [];
                 _compsComboBox.enabled = false;
             }
         }
-        
+
         public function onSelectComp(param1:Event):void {
             var _loc2_:* = null;
             if (_compsComboBox.selectedItem) {
@@ -217,60 +216,55 @@ package lzm.starling.swf.tool.ui {
                 dispatchEvent(_loc2_);
             }
         }
-        
+
         public function onColorChange(param1:Event):void {
             var _loc2_:* = _bgColorChooser.value;
             stage.color = _loc2_;
             Starling.current.stage.color = _loc2_;
         }
-        
+
         public function onIsDrag(param1:Event):void {
             var _loc2_:UIEvent = new UIEvent("onIsDrag");
             _loc2_.data = {"value": (uiConfig.getCompById("isDrag") as CheckBox).selected};
             dispatchEvent(_loc2_);
         }
-        
+
         public function onFpsChange(param1:Event):void {
             Assets.swf.fps = _fpsValue.value;
         }
-        
+
         public function onOpenTutorials(param1:Event):void {
         }
-        
+
         public function onOpenMoney(param1:Event):void {
         }
-        
+
         public function onOpenAlipay(param1:Event):void {
         }
-        
+
         public function onExportBtn(param1:Event):void {
             stage.addChild(_exportOption);
         }
-        
+
         private function get currentSelectFileName():String {
             return _selectFileNames[_switchSwfComboBox.selectedIndex];
         }
-        
+
         private function get currentSelectFileUrl():String {
             return _selectFiles[_switchSwfComboBox.selectedIndex].url;
         }
-        
+
         private function get currentSelectFile():File {
             return _selectFiles[_switchSwfComboBox.selectedIndex];
         }
-        
+
         private function export(e:Event):void {
-            trace(currentSelectFile.url);
-            Assets.openTempFile(currentSelectFile.url, function ():void {
-                Loading.instance.hide();
-                //to do 导出
-                trace(currentSelectFile.url);
-                
-            });
+            var exportUtil:ExportUtil = this._exportUtil;
             Loading.instance.show();
-            Util.swfScale = Number((uiConfig.getCompById("swfScale") as InputText).text);
+
+            exportUtil.exportFiles([new File(currentSelectFile.url)], this._exportOption.exportScale, this._exportOption.isMerger, this._exportOption.isMergerBigImage, this._exportOption.padding, this._exportOption.exportPath, this._exportOption.bigImageWidth, this._exportOption.bigImageHeight, this._exportOption.format, null, this._exportOption.isAnySize);
         }
-        
+
         public function onOpenAtfTool(param1:Event):void {
             if (_atfTool == null) {
                 _atfTool = new ATFTool();

@@ -26,7 +26,7 @@ package lzm.starling.swf.tool.ui
          _sprite.graphics.endFill();
          addChild(_sprite);
          _label = new TextField();
-         _label.defaultTextFormat = new TextFormat("PF Ronda Seven",12,16777215);
+         _label.defaultTextFormat = new TextFormat("Source Code Pro",12,16777215);
          addChild(_label);
       }
       
