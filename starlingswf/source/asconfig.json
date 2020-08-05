@@ -3,8 +3,7 @@
     "compilerOptions": {
         "source-path": [
             "src",
-            "D:/starling/starlingui/starlingui/starlingswf/libs/feathers-ui-4.1.1/source",
-            "D:/starling/starlingui/starlingui/starlingswf/libs/starling-2.6/starling/src"
+            "libs"
         ],
         "output": "bin/StarlingUIEditor.swf",
         "debug": true

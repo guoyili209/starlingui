@@ -1,6 +1,6 @@
 {
-    "as3mxml.sdk.framework": "d:\\sdk\\AIRSDK33",
+    "as3mxml.sdk.framework": "d:\\old\\project\\starling\\airsdk\\33\\AIRSDK_Windows",
     "as3mxml.sdk.searchPaths": [
-
+        "d:\\old\\project\\starling\\airsdk\\33\\AIRSDK_Windows"
     ]
 }

@@ -1,6 +1,0 @@
-<TextureAtlas imagePath="test.png">
-  <SubTexture name="img_arena_btn1" x="0" y="0" width="94" height="97" frameX="0" frameWidth="94" frameY="-1" frameHeight="98"/>
-  <SubTexture name="img_new_mail2" x="0" y="99" width="71" height="32"/>
-  <SubTexture name="img_new_mail1" x="73" y="99" width="64" height="24" frameX="-4" frameWidth="71" frameY="-4" frameHeight="32"/>
-  <SubTexture name="img_arena_btn2" x="96" y="0" width="94" height="97" frameX="0" frameWidth="94" frameY="-1" frameHeight="98"/>
-</TextureAtlas>
