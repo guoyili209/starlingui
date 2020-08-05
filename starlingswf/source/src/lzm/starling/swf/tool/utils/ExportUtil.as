@@ -42,6 +42,8 @@ package lzm.starling.swf.tool.utils
       private var _exportCount:int;
       
       private var _callBack:Function;
+
+      private var swfUtil:SwfUtil;
       
       public function ExportUtil()
       {
