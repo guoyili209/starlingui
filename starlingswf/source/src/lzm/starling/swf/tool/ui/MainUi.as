@@ -69,6 +69,7 @@ package lzm.starling.swf.tool.ui {
             _exportOption.addEventListener("export", export);
             loadUi("main.xml");
             this._exportUtil = new ExportUtil();
+            trace("xxxx");
         }
         
         override protected function loadXMLComplete(param1:Event):void {
@@ -259,13 +260,15 @@ package lzm.starling.swf.tool.ui {
         }
         
         private function export(e:Event):void {
+            trace(currentSelectFile.url);
             Assets.openTempFile(currentSelectFile.url, function ():void {
                 Loading.instance.hide();
+                //to do 导出
+                trace(currentSelectFile.url);
+                
             });
-            
             Loading.instance.show();
             Util.swfScale = Number((uiConfig.getCompById("swfScale") as InputText).text);
-            _exportUtil.exportFiles()
         }
         
         public function onOpenAtfTool(param1:Event):void {
