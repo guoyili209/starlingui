@@ -82,15 +82,15 @@ package com.bit101.utils
 		 */ 
 		public function parseXMLString(string:String):void
 		{
-			try
-			{
+			// try
+			// {
 				var xml:XML = new XML(string);
 				parseXML(xml);
-			}
-			catch(e:Error)
-			{
-				
-			}
+			// }
+			// catch(e:Error)
+			// {
+			// 	trace(e);
+			// }
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
@@ -123,8 +123,8 @@ package com.bit101.utils
 		{
 			var compInst:Object;
 			var specialProps:Object = {};
-			try
-			{
+			// try
+			// {
 				var classRef:Class = getDefinitionByName("com.bit101.components." + xml.name()) as Class;
 				compInst = new classRef();
 				
@@ -141,7 +141,7 @@ package com.bit101.utils
 						parent[id] = compInst;
 					}
 				}
-				
+
 				// event is another special case
 				if(xml.@event.toString() != "")
 				{
@@ -156,7 +156,7 @@ package com.bit101.utils
 						compInst.addEventListener(eventName, parent[handler]);
 					}
 				}
-				
+				trace(xml.attributes())
 				// every other attribute handled essentially the same
 				for each(var attrib:XML in xml.attributes())
 				{
@@ -196,11 +196,11 @@ package com.bit101.utils
 						compInst.addChild(child);
 					}
 				}
-			}
-			catch(e:Error)
-			{
-				
-			}
+			// }
+			// catch(e:Error)
+			// {
+			// 	trace("error:"+e);
+			// }
 			return compInst as Component;
 		}
 		

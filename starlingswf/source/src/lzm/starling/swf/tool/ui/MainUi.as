@@ -163,7 +163,7 @@ package lzm.starling.swf.tool.ui {
 
         public function onSwitchSwf(e:Event):void {
             Assets.openTempFile(currentSelectFileUrl, function():void {
-            onRefreshSwfSource(null);
+                onRefreshSwfSource(null);
             });
         }
 
@@ -258,7 +258,7 @@ package lzm.starling.swf.tool.ui {
             var exportUtil:ExportUtil = this._exportUtil;
             Loading.instance.show();
 
-            exportUtil.exportFiles([new File(currentSelectFile.url)], this._exportOption.exportScale, this._exportOption.isMerger, this._exportOption.isMergerBigImage, this._exportOption.padding, this._exportOption.exportPath, this._exportOption.bigImageWidth, this._exportOption.bigImageHeight, this._exportOption.format, null, this._exportOption.isAnySize);
+            exportUtil.exportFiles([new File(currentSelectFile.url)], this._exportOption.exportScaleV, this._exportOption.isMergerV, this._exportOption.isMergerBigImageV, this._exportOption.paddingV, this._exportOption.exportPathV, this._exportOption.bigImageWidthV, this._exportOption.bigImageHeightV, this._exportOption.formatV, null, this._exportOption.isAnySizeV);
         }
 
         public function onOpenAtfTool(param1:Event):void {
