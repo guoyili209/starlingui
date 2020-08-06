@@ -4,10 +4,11 @@ package lzm.starling.swf.tool.ui {
     import com.bit101.components.InputText;
     import com.bit101.components.NumericStepper;
     import com.bit101.components.Window;
+
     import flash.display.Sprite;
     import flash.events.Event;
     import flash.filesystem.File;
-    import lzm.starling.STLConstant;
+
     import lzm.util.LSOManager;
 
     public class ExportUi extends BaseUI {

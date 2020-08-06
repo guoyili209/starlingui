@@ -66,7 +66,7 @@ package lzm.starling.swf.tool.utils {
         private function loadSwf(param1:File):void {
             var file:File = param1;
             if(!file){
-               Loading.instance.hide(); 
+               Loading.instance.hide();
                return;
             }
             Loading.instance.text = "Export..." + (_exportCount - _exportFiles.length) + "/" + _exportCount;
