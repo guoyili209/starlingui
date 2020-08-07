@@ -18,22 +18,22 @@ package lzm.starling.swf.tool.utils
          super();
       }
       
-      public static function getMovieClipInfo(param1:String, param2:Class) : Object
+      public static function getMovieClipInfo(linkName:String, cls:Class) : Object
       {
-         var _loc13_:* = null;
-         var _loc5_:int = 0;
-         var _loc21_:* = null;
-         var _loc20_:* = null;
-         var _loc15_:* = null;
-         var _loc19_:int = 0;
-         var _loc12_:int = 0;
-         var _loc25_:* = null;
-         var _loc3_:* = null;
-         var _loc10_:* = null;
-         var _loc17_:* = null;
-         var _loc7_:* = null;
-         var _loc4_:* = null;
-         var _loc24_:int = 0;
+         var mcObj:* = null;
+         var totalFrames:int = 0;
+         var framesData:* = null;
+         var objCount:* = null;
+         var objArr:* = null;
+         var curFrame:int = 0;
+         var numChildren:int = 0;
+         var resultData:* = null;
+         var itemData:* = null;
+         var displayObj:* = null;
+         var className:* = null;
+         var type:* = null;
+         var objNu:* = null;
+         var curChildIndex:int = 0;
          var _loc9_:* = null;
          var _loc14_:int = 0;
          var _loc23_:* = null;
@@ -42,107 +42,107 @@ package lzm.starling.swf.tool.utils
          var _loc22_:int = 0;
          try
          {
-            _loc13_ = new param2();
-            Starup.tempContent.addChild(_loc13_);
-            _loc5_ = _loc13_.totalFrames;
-            _loc21_ = [];
-            _loc20_ = {};
-            _loc15_ = {};
-            _loc19_ = 1;
-            while(_loc19_ <= _loc5_)
+            mcObj = new cls();
+            Starup.tempContent.addChild(mcObj);
+            totalFrames = mcObj.totalFrames;
+            framesData = [];
+            objCount = {};
+            objArr = {};
+            curFrame = 1;
+            while(curFrame <= totalFrames)
             {
-               _loc13_.gotoAndStop(_loc19_);
-               _loc12_ = _loc13_.numChildren;
-               _loc25_ = [];
-               _loc4_ = {};
-               _loc24_ = 0;
-               while(_loc24_ < _loc12_)
+               mcObj.gotoAndStop(curFrame);
+               numChildren = mcObj.numChildren;
+               resultData = [];
+               objNu = {};
+               curChildIndex = 0;
+               while(curChildIndex < numChildren)
                {
-                  _loc10_ = _loc13_.getChildAt(_loc24_) as DisplayObject;
-                  _loc17_ = getQualifiedClassName(_loc10_);
-                  _loc7_ = SwfUtil.getChildType(_loc17_);
-                  if(!(_loc7_ == null || _loc7_ == "comp"))
+                  displayObj = mcObj.getChildAt(curChildIndex) as DisplayObject;
+                  className = getQualifiedClassName(displayObj);
+                  type = SwfUtil.getChildType(className);
+                  if(!(type == null || type == "comp"))
                   {
-                     if(_loc7_ == "text")
+                     if(type == "text")
                      {
-                        _loc17_ = _loc7_;
+                        className = type;
                      }
-                     if(_loc4_[_loc17_])
+                     if(objNu[className])
                      {
-                        var _loc28_:* = _loc17_;
-                        var _loc29_:* = _loc4_[_loc28_] + 1;
-                        _loc4_[_loc28_] = _loc29_;
+                        var tempClsN:* = className;
+                        var _loc29_:* = objNu[tempClsN] + 1;
+                        objNu[tempClsN] = _loc29_;
                      }
                      else
                      {
-                        _loc4_[_loc17_] = 1;
+                        objNu[className] = 1;
                      }
-                     if(_loc15_[_loc17_])
+                     if(objArr[className])
                      {
-                        if((_loc15_[_loc17_] as Array).indexOf(_loc10_) == -1)
+                        if((objArr[className] as Array).indexOf(displayObj) == -1)
                         {
-                           (_loc15_[_loc17_] as Array).push(_loc10_);
+                           (objArr[className] as Array).push(displayObj);
                         }
                      }
                      else
                      {
-                        _loc15_[_loc17_] = [_loc10_];
+                        objArr[className] = [displayObj];
                      }
-                     _loc3_ = [_loc17_,_loc7_,_loc10_.x * Util.swfScale,_loc10_.y * Util.swfScale,_loc10_.scaleX,_loc10_.scaleY,_loc10_.transform.matrix == null?0:Number(MatrixUtils.getSkewX(_loc10_.transform.matrix)),_loc10_.transform.matrix == null?0:Number(MatrixUtils.getSkewY(_loc10_.transform.matrix)),_loc10_.alpha];
-                     if(_loc10_.name.indexOf("instance") == -1)
+                     itemData = [className,type,displayObj.x * Util.swfScale,displayObj.y * Util.swfScale,displayObj.scaleX,displayObj.scaleY,displayObj.transform.matrix == null?0:Number(MatrixUtils.getSkewX(displayObj.transform.matrix)),displayObj.transform.matrix == null?0:Number(MatrixUtils.getSkewY(displayObj.transform.matrix)),displayObj.alpha];
+                     if(displayObj.name.indexOf("instance") == -1)
                      {
-                        _loc3_.push(_loc10_.name);
+                        itemData.push(displayObj.name);
                      }
                      else
                      {
-                        _loc3_.push("");
+                        itemData.push("");
                      }
-                     _loc3_.push((_loc15_[_loc17_] as Array).indexOf(_loc10_));
-                     if(_loc7_ == "s9" || _loc7_ == "shapeImg")
+                     itemData.push((objArr[className] as Array).indexOf(displayObj));
+                     if(type == "s9" || type == "shapeImg")
                      {
-                        _loc3_.push(Util.formatNumber(_loc10_.width * Util.swfScale));
-                        _loc3_.push(Util.formatNumber(_loc10_.height * Util.swfScale));
+                        itemData.push(Util.formatNumber(displayObj.width * Util.swfScale));
+                        itemData.push(Util.formatNumber(displayObj.height * Util.swfScale));
                      }
-                     else if(_loc7_ == "text")
+                     else if(type == "text")
                      {
-                        _loc3_.push((_loc10_ as TextField).width);
-                        _loc3_.push((_loc10_ as TextField).height);
-                        _loc3_.push((_loc10_ as TextField).defaultTextFormat.font);
-                        _loc3_.push((_loc10_ as TextField).defaultTextFormat.color);
-                        _loc3_.push((_loc10_ as TextField).defaultTextFormat.size);
-                        _loc3_.push((_loc10_ as TextField).defaultTextFormat.align);
-                        _loc3_.push((_loc10_ as TextField).defaultTextFormat.italic);
-                        _loc3_.push((_loc10_ as TextField).defaultTextFormat.bold);
-                        _loc3_.push((_loc10_ as TextField).text);
+                        itemData.push((displayObj as TextField).width);
+                        itemData.push((displayObj as TextField).height);
+                        itemData.push((displayObj as TextField).defaultTextFormat.font);
+                        itemData.push((displayObj as TextField).defaultTextFormat.color);
+                        itemData.push((displayObj as TextField).defaultTextFormat.size);
+                        itemData.push((displayObj as TextField).defaultTextFormat.align);
+                        itemData.push((displayObj as TextField).defaultTextFormat.italic);
+                        itemData.push((displayObj as TextField).defaultTextFormat.bold);
+                        itemData.push((displayObj as TextField).text);
                      }
-                     if(_loc10_.blendMode == "normal")
+                     if(displayObj.blendMode == "normal")
                      {
-                        _loc3_.push("auto");
+                        itemData.push("auto");
                      }
                      else
                      {
-                        _loc3_.push(_loc10_.blendMode);
+                        itemData.push(displayObj.blendMode);
                      }
-                     _loc25_.push(_loc3_);
+                     resultData.push(itemData);
                   }
-                  _loc24_++;
+                  curChildIndex++;
                }
-               _loc21_.push(_loc25_);
+               framesData.push(resultData);
                var _loc31_:int = 0;
-               var _loc30_:* = _loc4_;
-               for(_loc17_ in _loc4_)
+               var tempObjNu:* = objNu;
+               for(className in objNu)
                {
-                  _loc20_[_loc17_] = _loc15_[_loc17_].length;
+                  objCount[className] = objArr[className].length;
                }
-               _loc19_++;
+               curFrame++;
             }
             var _loc33_:int = 0;
-            var _loc32_:* = _loc20_;
-            for(var _loc16_:* in _loc20_)
+            var _loc32_:* = objCount;
+            for(var _loc16_:* in objCount)
             {
-               _loc20_[_loc16_] = [SwfUtil.getChildType(_loc16_),_loc20_[_loc16_]];
+               objCount[_loc16_] = [SwfUtil.getChildType(_loc16_),objCount[_loc16_]];
             }
-            _loc9_ = _loc13_.currentLabels;
+            _loc9_ = mcObj.currentLabels;
             _loc14_ = _loc9_.length;
             _loc18_ = [];
             _loc11_ = {};
@@ -150,7 +150,7 @@ package lzm.starling.swf.tool.utils
             while(_loc22_ < _loc14_)
             {
                _loc23_ = _loc9_[_loc22_];
-               _loc13_.gotoAndStop(_loc23_.name);
+               mcObj.gotoAndStop(_loc23_.name);
                _loc18_.push([_loc23_.name,_loc23_.frame - 1]);
                if(_loc23_.name.indexOf("@") == 0)
                {
@@ -162,17 +162,17 @@ package lzm.starling.swf.tool.utils
                }
                if(_loc22_ == _loc14_ - 1)
                {
-                  (_loc18_[_loc22_] as Array).push(_loc13_.totalFrames - 1);
+                  (_loc18_[_loc22_] as Array).push(mcObj.totalFrames - 1);
                }
                _loc22_++;
             }
-            Starup.tempContent.removeChild(_loc13_);
+            Starup.tempContent.removeChild(mcObj);
             _loc29_ = {
-               "frames":_loc21_,
+               "frames":framesData,
                "labels":_loc18_,
                "frameEvents":_loc11_,
-               "objCount":_loc20_,
-               "loop":(Assets.getTempData(param1) == null?true:Assets.getTempData(param1))
+               "objCount":objCount,
+               "loop":(Assets.getTempData(linkName) == null?true:Assets.getTempData(linkName))
             };
             return _loc29_;
          }
