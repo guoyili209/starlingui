@@ -4,20 +4,20 @@ package lzm.starling.swf.tool.utils
     import flash.display.MovieClip;
     import flash.text.TextField;
     import flash.utils.getQualifiedClassName;
-    
+
     import lzm.starling.swf.filter.SwfFilter;
     import lzm.starling.swf.tool.Starup;
     import lzm.starling.swf.tool.asset.Assets;
-    
+
     public class SpriteUtil
    {
-       
-      
+
+
       public function SpriteUtil()
       {
          super();
       }
-      
+
       public static function getSpriteInfo(name:String, linkClass:Class) : Array
       {
          var itemData:Array = null;
@@ -27,16 +27,16 @@ package lzm.starling.swf.tool.utils
          var filterArr:Array = null;
          var filterObj:Object = null;
          var filterClassName:* = null;
-         var index:int = 0;
-         var _loc6_:int = 0;
+         var childIndex:int = 0;
+         var filterIndex:int = 0;
          var mc:MovieClip = new linkClass();
          Starup.tempContent.addChild(mc);
-         var len:int = mc.numChildren;
+         var childLen:int = mc.numChildren;
          var dataArr:Array = [];
-         index = 0;
-         while(index < len)
+         childIndex = 0;
+         while(childIndex < childLen)
          {
-            displayObj = mc.getChildAt(index) as DisplayObject;
+            displayObj = mc.getChildAt(childIndex) as DisplayObject;
             className = getQualifiedClassName(displayObj);
             type = SwfUtil.getChildType(className);
             if(type != null)
@@ -71,21 +71,21 @@ package lzm.starling.swf.tool.utils
                   itemData.push((displayObj as TextField).text);
                   filterArr = displayObj.filters;
                   filterObj = {};
-                  _loc6_ = 0;
-                  while(_loc6_ < filterArr.length)
+                  filterIndex = 0;
+                  while(filterIndex < filterArr.length)
                   {
-                     filterClassName = getQualifiedClassName(filterArr[_loc6_]);
+                     filterClassName = getQualifiedClassName(filterArr[filterIndex]);
                      if(SwfFilter.filters.indexOf(filterClassName) != -1)
                      {
-                        filterObj[filterClassName] = filterArr[_loc6_].clone();
+                        filterObj[filterClassName] = filterArr[filterIndex].clone();
                      }
-                     _loc6_++;
+                     filterIndex++;
                   }
                   itemData.push(filterObj);
                }
                else if(type == "comp")
                {
-                  itemData.push(Assets.getTempData(name + "-" + index + className));
+                  itemData.push(Assets.getTempData(name + "-" + childIndex + className));
                }
                if(type != "text")
                {
@@ -105,7 +105,7 @@ package lzm.starling.swf.tool.utils
                itemData.push(displayObj.blendMode);
                dataArr.push(itemData);
             }
-            index++;
+            childIndex++;
          }
          Starup.tempContent.removeChild(mc);
          return dataArr;

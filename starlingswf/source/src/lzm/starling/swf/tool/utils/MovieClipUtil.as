@@ -2,44 +2,46 @@ package lzm.starling.swf.tool.utils
 {
    import flash.display.DisplayObject;
    import flash.display.FrameLabel;
-   import flash.display.MovieClip;
    import flash.text.TextField;
    import flash.utils.getQualifiedClassName;
+
    import lzm.starling.swf.tool.Starup;
    import lzm.starling.swf.tool.asset.Assets;
+   import flash.display.MovieClip;
 
-    
+
     public class MovieClipUtil
    {
-       
-      
+
+
       public function MovieClipUtil()
       {
          super();
       }
-      
+
       public static function getMovieClipInfo(linkName:String, cls:Class) : Object
       {
-         var mcObj:* = null;
+         var mcData:Object={};
+         var mcObj:MovieClip = null;
          var totalFrames:int = 0;
-         var framesData:* = null;
-         var objCount:* = null;
-         var objArr:* = null;
+         var framesData:Array = null;
+         var objCount:Object = null;
+         var objArr:Object = null;
          var curFrame:int = 0;
          var numChildren:int = 0;
-         var resultData:* = null;
-         var itemData:* = null;
-         var displayObj:* = null;
-         var className:* = null;
-         var type:* = null;
-         var objNu:* = null;
+         var resultData:Array = null;
+         var itemData:Array = null;
+         var displayObj:DisplayObject = null;
+         var className:String = null;
+         var type:String = null;
+         var objNu:Object = null;
          var curChildIndex:int = 0;
-         var _loc9_:* = null;
-         var _loc14_:int = 0;
-         var _loc23_:* = null;
-         var _loc18_:* = null;
-         var _loc11_:* = null;
-         var _loc22_:int = 0;
+         var frameLabelArr:Array = null;
+         var frameLabelLength:int = 0;
+         var frameLabel:FrameLabel = null;
+         var labels:Array = null;
+         var frameEvents:* = null;
+         var frameIndex:int = 0;
          try
          {
             mcObj = new cls();
@@ -70,8 +72,8 @@ package lzm.starling.swf.tool.utils
                      if(objNu[className])
                      {
                         var tempClsN:* = className;
-                        var _loc29_:* = objNu[tempClsN] + 1;
-                        objNu[tempClsN] = _loc29_;
+                        var clsNRise:* = objNu[tempClsN] + 1;
+                        objNu[tempClsN] = clsNRise;
                      }
                      else
                      {
@@ -128,7 +130,7 @@ package lzm.starling.swf.tool.utils
                   curChildIndex++;
                }
                framesData.push(resultData);
-               var _loc31_:int = 0;
+            //    var _loc31_:int = 0;
                var tempObjNu:* = objNu;
                for(className in objNu)
                {
@@ -136,45 +138,45 @@ package lzm.starling.swf.tool.utils
                }
                curFrame++;
             }
-            var _loc33_:int = 0;
-            var _loc32_:* = objCount;
-            for(var _loc16_:* in objCount)
+            // var _loc33_:int = 0;
+            // var _loc32_:* = objCount;
+            for(var key:* in objCount)
             {
-               objCount[_loc16_] = [SwfUtil.getChildType(_loc16_),objCount[_loc16_]];
+               objCount[key] = [SwfUtil.getChildType(key),objCount[key]];
             }
-            _loc9_ = mcObj.currentLabels;
-            _loc14_ = _loc9_.length;
-            _loc18_ = [];
-            _loc11_ = {};
-            _loc22_ = 0;
-            while(_loc22_ < _loc14_)
+            frameLabelArr = mcObj.currentLabels;
+            frameLabelLength = frameLabelArr.length;
+            labels = [];
+            frameEvents = {};
+            frameIndex = 0;
+            while(frameIndex < frameLabelLength)
             {
-               _loc23_ = _loc9_[_loc22_];
-               mcObj.gotoAndStop(_loc23_.name);
-               _loc18_.push([_loc23_.name,_loc23_.frame - 1]);
-               if(_loc23_.name.indexOf("@") == 0)
+               frameLabel = frameLabelArr[frameIndex];
+               mcObj.gotoAndStop(frameLabel.name);
+               labels.push([frameLabel.name,frameLabel.frame - 1]);
+               if(frameLabel.name.indexOf("@") == 0)
                {
-                  _loc11_[_loc23_.frame - 1] = _loc23_.name;
+                  frameEvents[frameLabel.frame - 1] = frameLabel.name;
                }
-               if(_loc22_ > 0)
+               if(frameIndex > 0)
                {
-                  (_loc18_[_loc22_ - 1] as Array).push(_loc23_.frame - 2);
+                  (labels[frameIndex - 1] as Array).push(frameLabel.frame - 2);
                }
-               if(_loc22_ == _loc14_ - 1)
+               if(frameIndex == frameLabelLength - 1)
                {
-                  (_loc18_[_loc22_] as Array).push(mcObj.totalFrames - 1);
+                  (labels[frameIndex] as Array).push(mcObj.totalFrames - 1);
                }
-               _loc22_++;
+               frameIndex++;
             }
             Starup.tempContent.removeChild(mcObj);
-            _loc29_ = {
+            mcData = {
                "frames":framesData,
-               "labels":_loc18_,
-               "frameEvents":_loc11_,
+               "labels":labels,
+               "frameEvents":frameEvents,
                "objCount":objCount,
                "loop":(Assets.getTempData(linkName) == null?true:Assets.getTempData(linkName))
             };
-            return _loc29_;
+            return mcData;
          }
          catch(error:Error)
          {

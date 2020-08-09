@@ -63,11 +63,10 @@ package lzm.starling.swf.tool.utils {
             loadSwf(_exportFiles.shift());
         }
 
-        private function loadSwf(param1:File):void {
-            var file:File = param1;
-            if(!file){
-               Loading.instance.hide();
-               return;
+        private function loadSwf(file:File):void {
+            if (!file) {
+                Loading.instance.hide();
+                return;
             }
             Loading.instance.text = "Export..." + (_exportCount - _exportFiles.length) + "/" + _exportCount;
             Assets.openTempFile(file.url, function():void {
@@ -79,9 +78,9 @@ package lzm.starling.swf.tool.utils {
                     loadSwf(_exportFiles.shift());
                 };
                 var exportImages:Function = function():void {
-                    var _loc12_:* = null;
+                    var bimapData:* = null;
                     var _loc18_:* = null;
-                    var _loc20_:int = 0;
+                    var exportImagesArrIndex:int = 0;
                     var _loc25_:* = null;
                     var _loc13_:* = null;
                     var _loc17_:* = null;
@@ -93,15 +92,15 @@ package lzm.starling.swf.tool.utils {
                     var _loc19_:* = null;
                     var _loc1_:* = null;
                     var _loc3_:* = null;
-                    var _loc5_:String = file.name.split(".")[0];
-                    var _loc27_:String = _exportPath + "/" + _loc5_ + "/";
-                    var _loc6_:String = _exportPath + "/" + _loc5_ + "/images/";
-                    var _loc8_:String = _exportPath + "/" + _loc5_ + "/big_images/";
-                    var _loc23_:String = _exportPath + "/" + _loc5_ + "/" + _loc5_ + (_exportPlatform == "Starling" ? ".bytes" : "_swf.json");
-                    saveSwfData(_loc23_, swfUtil.getSwfData(_exportPlatform));
-                    var _loc26_:Array = swfUtil.exportImages;
-                    var _loc7_:int = _loc26_.length;
-                    if (_loc7_ == 0) {
+                    var fileName:String = file.name.split(".")[0];
+                    var savePath:String = _exportPath + "/" + fileName + "/";
+                    var _loc6_:String = savePath + "images/";
+                    var _loc8_:String = savePath + "big_images/";
+                    var saveBytes:String = savePath + fileName + ".bytes";
+                    saveSwfData(saveBytes, swfUtil.getSwfData(_exportPlatform));
+                    var exportImagesArr:Array = swfUtil.exportImages;
+                    var exportImagesArrLen:int = exportImagesArr.length;
+                    if (exportImagesArrLen == 0) {
                         return;
                     }
                     var _loc9_:Array = [];
@@ -110,47 +109,47 @@ package lzm.starling.swf.tool.utils {
                     var _loc24_:Array = [];
                     var _loc4_:Array = [];
                     var _loc22_:Object = {};
-                    _loc20_ = 0;
-                    while (_loc20_ < _loc7_) {
-                        _loc12_ = ImageUtil.getBitmapdata(swfUtil.getClass(_loc26_[_loc20_]), _exportScale);
+                    exportImagesArrIndex = 0;
+                    while (exportImagesArrIndex < exportImagesArrLen) {
+                        bimapData = ImageUtil.getBitmapdata(swfUtil.getClass(exportImagesArr[exportImagesArrIndex]), _exportScale);
                         if (_isMerger) {
-                            if (isBigImage(_loc12_) && !_isMergerBigImage) {
-                                _loc4_.push(_loc26_[_loc20_]);
-                                _loc11_.push(_loc12_);
+                            if (isBigImage(bimapData) && !_isMergerBigImage) {
+                                _loc4_.push(exportImagesArr[exportImagesArrIndex]);
+                                _loc11_.push(bimapData);
                             } else {
-                                _loc18_ = _loc12_.getColorBoundsRect(4278190080, 0, false);
-                                _loc9_.push(_loc12_);
+                                _loc18_ = bimapData.getColorBoundsRect(4278190080, 0, false);
+                                _loc9_.push(bimapData);
                                 _loc2_.push(_loc18_);
-                                _loc24_.push(_loc26_[_loc20_]);
-                                _loc22_[_loc26_[_loc20_]] = new Rectangle(0, 0, _loc18_.width, _loc18_.height);
+                                _loc24_.push(exportImagesArr[exportImagesArrIndex]);
+                                _loc22_[exportImagesArr[exportImagesArrIndex]] = new Rectangle(0, 0, _loc18_.width, _loc18_.height);
                             }
-                        } else if (isBigImage(_loc12_)) {
-                            _loc4_.push(_loc26_[_loc20_]);
-                            _loc11_.push(_loc12_);
+                        } else if (isBigImage(bimapData)) {
+                            _loc4_.push(exportImagesArr[exportImagesArrIndex]);
+                            _loc11_.push(bimapData);
                         } else {
-                            _loc24_.push(_loc26_[_loc20_]);
-                            _loc9_.push(_loc12_);
+                            _loc24_.push(exportImagesArr[exportImagesArrIndex]);
+                            _loc9_.push(bimapData);
                         }
-                        _loc20_++;
+                        exportImagesArrIndex++;
                     }
                     if (_isMerger) {
                         _loc25_ = TextureUtil.packTextures(0, _padding, _loc22_);
                         if (_loc25_) {
                             _loc13_ = new BitmapData(_loc25_.width, _loc25_.height, true, 0);
                             _loc17_ = <TextureAtlas />;
-                            _loc14_ = {"file": _loc5_ + ".png",
+                            _loc14_ = {"file": fileName + ".png",
                                     "frames": {}};
                             _loc16_ = new Rectangle();
                             _loc19_ = new Point();
-                            _loc7_ = _loc24_.length;
-                            _loc20_ = 0;
-                            while (_loc20_ < _loc7_) {
-                                _loc15_ = _loc24_[_loc20_];
+                            exportImagesArrLen = _loc24_.length;
+                            exportImagesArrIndex = 0;
+                            while (exportImagesArrIndex < exportImagesArrLen) {
+                                _loc15_ = _loc24_[exportImagesArrIndex];
                                 _loc21_ = _loc22_[_loc15_];
-                                _loc12_ = _loc9_[_loc20_];
+                                bimapData = _loc9_[exportImagesArrIndex];
                                 _loc19_.x = _loc21_.x;
                                 _loc19_.y = _loc21_.y;
-                                _loc16_ = _loc2_[_loc20_];
+                                _loc16_ = _loc2_[exportImagesArrIndex];
                                 if (_exportPlatform == "Starling") {
                                     _loc10_ = <SubTexture />;
                                     _loc10_.@name = _loc15_;
@@ -158,16 +157,16 @@ package lzm.starling.swf.tool.utils {
                                     _loc10_.@y = _loc19_.y;
                                     _loc10_.@width = _loc16_.width;
                                     _loc10_.@height = _loc16_.height;
-                                    if (_loc16_.width < _loc12_.width || _loc16_.height < _loc12_.height) {
+                                    if (_loc16_.width < bimapData.width || _loc16_.height < bimapData.height) {
                                         _loc10_.@frameX = -_loc16_.x;
-                                        _loc10_.@frameWidth = _loc12_.width;
+                                        _loc10_.@frameWidth = bimapData.width;
                                         _loc10_.@frameY = -_loc16_.y;
-                                        _loc10_.@frameHeight = _loc12_.height;
+                                        _loc10_.@frameHeight = bimapData.height;
                                     }
                                     _loc17_.appendChild(_loc10_);
                                 }
-                                _loc13_.copyPixels(_loc12_, _loc16_, _loc19_);
-                                _loc20_++;
+                                _loc13_.copyPixels(bimapData, _loc16_, _loc19_);
+                                exportImagesArrIndex++;
                             }
                             if (_isAnySize) {
                                 _loc1_ = _loc13_.getColorBoundsRect(4278190080, 0, false);
@@ -175,30 +174,30 @@ package lzm.starling.swf.tool.utils {
                                 _loc1_.width = _loc1_.width + 1;
                                 _loc3_ = new BitmapData(_loc1_.width, _loc1_.height, true, 0);
                                 _loc3_.copyPixels(_loc13_, _loc1_, new Point(0, 0));
-                                saveImage(_loc27_ + _loc5_ + ".png", _loc3_);
+                                saveImage(savePath + fileName + ".png", _loc3_);
                             } else {
-                                saveImage(_loc27_ + _loc5_ + ".png", _loc13_);
+                                saveImage(savePath + fileName + ".png", _loc13_);
                             }
                             if (_exportPlatform == "Starling") {
-                                _loc17_.@imagePath = _loc5_ + ".png";
-                                saveXml(_loc27_ + _loc5_ + ".xml", _loc17_.toXMLString());
+                                _loc17_.@imagePath = fileName + ".png";
+                                saveXml(savePath + fileName + ".xml", _loc17_.toXMLString());
                             } else if (_exportPlatform == "Egret") {
-                                saveXml(_loc27_ + _loc5_ + ".json", JSON.stringify(_loc14_));
+                                saveXml(savePath + fileName + ".json", JSON.stringify(_loc14_));
                             }
                         }
                     } else {
-                        _loc7_ = _loc24_.length;
-                        _loc20_ = 0;
-                        while (_loc20_ < _loc7_) {
-                            saveImage(_loc6_ + _loc24_[_loc20_] + ".png", _loc9_[_loc20_]);
-                            _loc20_++;
+                        exportImagesArrLen = _loc24_.length;
+                        exportImagesArrIndex = 0;
+                        while (exportImagesArrIndex < exportImagesArrLen) {
+                            saveImage(_loc6_ + _loc24_[exportImagesArrIndex] + ".png", _loc9_[exportImagesArrIndex]);
+                            exportImagesArrIndex++;
                         }
                     }
-                    _loc7_ = _loc4_.length;
-                    _loc20_ = 0;
-                    while (_loc20_ < _loc7_) {
-                        saveImage(_loc8_ + _loc4_[_loc20_] + ".png", _loc11_[_loc20_]);
-                        _loc20_++;
+                    exportImagesArrLen = _loc4_.length;
+                    exportImagesArrIndex = 0;
+                    while (exportImagesArrIndex < exportImagesArrLen) {
+                        saveImage(_loc8_ + _loc4_[exportImagesArrIndex] + ".png", _loc11_[exportImagesArrIndex]);
+                        exportImagesArrIndex++;
                     }
                 };
 
