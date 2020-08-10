@@ -33,23 +33,23 @@ package lzm.starling.swf.tool.utils
          return Math.round(param1 * 100) / 100;
       }
       
-      public static function getName(param1:Object) : String
+      public static function getName(obj:Object) : String
       {
-         var _loc2_:* = null;
-         var _loc3_:* = null;
-         if(param1 is String || param1 is FileReference)
+         var regObj:* = null;
+         var name:* = null;
+         if(obj is String || obj is FileReference)
          {
-            _loc3_ = param1 is String?param1 as String:(param1 as FileReference).name;
-            _loc3_ = _loc3_.replace(/%20/g," ");
-            _loc2_ = /(.*[\\\/])?(.+)(\.[\w]{1,4})/.exec(_loc3_);
-            if(_loc2_ && _loc2_.length == 4)
+            name = obj is String?obj as String:(obj as FileReference).name;
+            name = name.replace(/%20/g," ");
+            regObj = /(.*[\\\/])?(.+)(\.[\w]{1,4})/.exec(name);
+            if(regObj && regObj.length == 4)
             {
-               return _loc2_[2];
+               return regObj[2];
             }
-            throw new ArgumentError("Could not extract name from String \'" + param1 + "\'");
+            throw new ArgumentError("Could not extract name from String \'" + obj + "\'");
          }
-         _loc3_ = getQualifiedClassName(param1);
-         throw new ArgumentError("Cannot extract names for objects of type \'" + _loc3_ + "\'");
+         name = getQualifiedClassName(obj);
+         throw new ArgumentError("Cannot extract names for objects of type \'" + name + "\'");
       }
       
       public static function isPowerOfTwo(param1:int) : Boolean

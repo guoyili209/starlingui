@@ -15,17 +15,13 @@ package lzm.starling.swf.tool.ui {
     import flash.net.URLRequest;
 
     import lzm.atf.tool.ATFTool;
-
     import lzm.starling.swf.Swf;
     import lzm.starling.swf.tool.asset.Assets;
-    import lzm.starling.swf.tool.utils.ImageUtil;
+    import lzm.starling.swf.tool.utils.ExportUtil;
     import lzm.starling.swf.tool.utils.SysUtils;
     import lzm.starling.swf.tool.utils.Util;
-    import lzm.util.LSOManager;
-    import lzm.starling.swf.tool.utils.ExportUtil;
 
     import starling.core.Starling;
-    import starling.textures.Texture
 
     public class MainUi extends BaseUI {
 

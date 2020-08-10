@@ -16,8 +16,7 @@ package {
             stage.align = "TL";
             stage.scaleMode = "noScale";
             stage.frameRate = 60;
-            stage.color = 10066329;
-            LSOManager.NAME = "StarlingSwf";
+            stage.color = 0x999999;
             WebUtils.register();
             starupLoading = new StarupLoading();
             addChild(addChild(starupLoading));

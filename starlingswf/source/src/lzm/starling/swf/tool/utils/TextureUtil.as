@@ -1,180 +1,138 @@
-package lzm.starling.swf.tool.utils
-{
-   import flash.geom.Rectangle;
-   
-   public final class TextureUtil
-   {
-      
-      private static const HIGHEST:uint = 4294967295;
-       
-      
-      public function TextureUtil()
-      {
-         super();
-      }
-      
-      public static function packTextures(param1:uint, param2:uint, param3:Object, param4:Boolean = false) : Rectangle
-      {
-         var _loc6_:Boolean = false;
-         var _loc8_:int = 0;
-         var _loc14_:int = 0;
-         var _loc13_:* = null;
-         var _loc7_:* = null;
-         var _loc12_:* = null;
-         var _loc5_:int = 0;
-         var _loc10_:int = 0;
-         var _loc21_:int = 0;
-         var _loc20_:* = param3;
-         for each(var _loc9_:* in param3)
-         {
-         }
-         if(!_loc9_)
-         {
-            return null;
-         }
-         var _loc17_:uint = 0;
-         var _loc11_:Vector.<Rectangle> = new Vector.<Rectangle>();
-         var _loc15_:int = 0;
-         var _loc16_:int = 0;
-         var _loc23_:int = 0;
-         var _loc22_:* = param3;
-         for each(_loc9_ in param3)
-         {
-            _loc17_ = _loc17_ + _loc9_.width * _loc9_.height;
-            _loc11_.push(_loc9_);
-            if(_loc16_ < _loc9_.width)
-            {
-               _loc16_ = _loc9_.width;
+package lzm.starling.swf.tool.utils {
+    import flash.geom.Rectangle;
+
+    public final class TextureUtil {
+
+        private static const HIGHEST:uint = 4294967295;
+
+
+        public function TextureUtil() {
+            super();
+        }
+
+        public static function packTextures(nu2N_W:uint, padding:uint, exportImgRectObj:Object, param4:Boolean = false):Rectangle {
+            var bool:Boolean = false;
+            var wpadding:int = 0;
+            var hpadding:int = 0;
+            var maxHRect:* = null;
+            var preRect:* = null;
+            var mextRect:* = null;
+            var index:int = 0;
+            var count:int = 0;
+            // for each(var rect:* in exportImgRectObj)
+            // {
+            // }
+            // if(!rect)
+            // {
+            //    return null;
+            // }
+            var nu:uint = 0;
+            var rectVec:Vector.<Rectangle> = new Vector.<Rectangle>();
+            var maxH:int = 0;
+            var maxW:int = 0;
+            for each (var rect:* in exportImgRectObj) {
+                nu = nu + rect.width * rect.height;
+                rectVec.push(rect);
+                if (maxW < rect.width) {
+                    maxW = rect.width;
+                }
+                if (maxH < rect.height) {
+                    maxH = rect.height;
+                }
             }
-            if(_loc15_ < _loc9_.height)
-            {
-               _loc15_ = _loc9_.height;
+            rectVec.sort(sortRectList);
+            if (nu2N_W == 0) {
+                nu2N_W = Math.sqrt(nu);
             }
-         }
-         _loc11_.sort(sortRectList);
-         if(param1 == 0)
-         {
-            param1 = Math.sqrt(_loc17_);
-         }
-         param1 = getNearest2N(Math.max(int(_loc11_[0].width) + param2,param1));
-         if(param1 < _loc15_)
-         {
-            param1 = param1 * 2;
-         }
-         if(param1 < _loc16_)
-         {
-            param1 = param1 * 2;
-         }
-         var _loc18_:* = 4294967295;
-         var _loc19_:Vector.<Rectangle> = new Vector.<Rectangle>();
-         _loc19_.push(new Rectangle(0,0,param1,_loc18_));
-         do
-         {
-            _loc13_ = getHighestArea(_loc19_);
-            _loc5_ = _loc19_.indexOf(_loc13_);
-            _loc6_ = false;
-            _loc10_ = 0;
-            var _loc25_:int = 0;
-            var _loc24_:* = _loc11_;
-            for each(_loc9_ in _loc11_)
-            {
-               _loc8_ = int(_loc9_.width) + param2;
-               _loc14_ = int(_loc9_.height) + param2;
-               if(_loc13_.width >= _loc8_ && _loc13_.height >= _loc14_)
-               {
-                  _loc6_ = true;
-                  break;
-               }
-               _loc10_++;
+            nu2N_W = getNearest2N(Math.max(int(rectVec[0].width) + padding, nu2N_W));
+            if (nu2N_W < maxH) {
+                nu2N_W = nu2N_W * 2;
             }
-            if(_loc6_)
-            {
-               _loc9_.x = _loc13_.x;
-               _loc9_.y = _loc13_.y;
-               _loc11_.splice(_loc10_,1);
-               _loc19_.splice(_loc5_ + 1,0,new Rectangle(_loc13_.x + _loc8_,_loc13_.y,_loc13_.width - _loc8_,_loc13_.height));
-               _loc13_.y = _loc13_.y + _loc14_;
-               _loc13_.width = _loc8_;
-               _loc13_.height = _loc13_.height - _loc14_;
+            if (nu2N_W < maxW) {
+                nu2N_W = nu2N_W * 2;
             }
-            else
-            {
-               if(_loc5_ == 0)
-               {
-                  _loc12_ = _loc19_[_loc5_ + 1];
-               }
-               else if(_loc5_ == _loc19_.length - 1)
-               {
-                  _loc12_ = _loc19_[_loc5_ - 1];
-               }
-               else
-               {
-                  _loc7_ = _loc19_[_loc5_ - 1];
-                  _loc12_ = _loc19_[_loc5_ + 1];
-                  _loc12_ = _loc7_.height <= _loc12_.height?_loc12_:_loc7_;
-               }
-               if(_loc13_.x < _loc12_.x)
-               {
-                  _loc12_.x = _loc13_.x;
-               }
-               _loc12_.width = _loc13_.width + _loc12_.width;
-               _loc19_.splice(_loc5_,1);
+            var nu2N_H:* = 4294967295;
+            var rectVec2:Vector.<Rectangle> = new Vector.<Rectangle>();
+            rectVec2.push(new Rectangle(0, 0, nu2N_W, nu2N_H));
+            do {
+                maxHRect = getHighestArea(rectVec2);
+                index = rectVec2.indexOf(maxHRect);
+                bool = false;
+                count = 0;
+                for each (rect in rectVec) {
+                    wpadding = int(rect.width) + padding;
+                    hpadding = int(rect.height) + padding;
+                    if (maxHRect.width >= wpadding && maxHRect.height >= hpadding) {
+                        bool = true;
+                        break;
+                    }
+                    count++;
+                }
+                if (bool) {
+                    rect.x = maxHRect.x;
+                    rect.y = maxHRect.y;
+                    rectVec.splice(count, 1);
+                    rectVec2.splice(index + 1, 0, new Rectangle(maxHRect.x + wpadding, maxHRect.y, maxHRect.width - wpadding, maxHRect.height));
+                    maxHRect.y = maxHRect.y + hpadding;
+                    maxHRect.width = wpadding;
+                    maxHRect.height = maxHRect.height - hpadding;
+                } else {
+                    if (index == 0) {
+                        mextRect = rectVec2[index + 1];
+                    } else if (index == rectVec2.length - 1) {
+                        mextRect = rectVec2[index - 1];
+                    } else {
+                        preRect = rectVec2[index - 1];
+                        mextRect = rectVec2[index + 1];
+                        mextRect = preRect.height <= mextRect.height ? mextRect : preRect;
+                    }
+                    if (maxHRect.x < mextRect.x) {
+                        mextRect.x = maxHRect.x;
+                    }
+                    mextRect.width = maxHRect.width + mextRect.width;
+                    rectVec2.splice(index, 1);
+                }
+            } while (rectVec.length > 0);
+
+            nu2N_H = uint(getNearest2N(nu2N_H - getLowestArea(rectVec2).height));
+            return new Rectangle(0, 0, nu2N_W, nu2N_H);
+        }
+
+        private static function sortRectList(param1:Rectangle, param2:Rectangle):int {
+            var _loc3_:uint = param1.width + param1.height;
+            var _loc4_:uint = param2.width + param2.height;
+            if (_loc3_ == _loc4_) {
+                return param1.width > param2.width ? -1 : 1;
             }
-         }
-         while(_loc11_.length > 0);
-         
-         _loc18_ = uint(getNearest2N(_loc18_ - getLowestArea(_loc19_).height));
-         return new Rectangle(0,0,param1,_loc18_);
-      }
-      
-      private static function sortRectList(param1:Rectangle, param2:Rectangle) : int
-      {
-         var _loc3_:uint = param1.width + param1.height;
-         var _loc4_:uint = param2.width + param2.height;
-         if(_loc3_ == _loc4_)
-         {
-            return param1.width > param2.width?-1:1;
-         }
-         return _loc3_ > _loc4_?-1:1;
-      }
-      
-      private static function getNearest2N(param1:uint) : uint
-      {
-         return !!(param1 & param1 - 1)?1 << param1.toString(2).length:param1;
-      }
-      
-      private static function getHighestArea(param1:Vector.<Rectangle>) : Rectangle
-      {
-         var _loc4_:* = null;
-         var _loc3_:uint = 0;
-         var _loc6_:int = 0;
-         var _loc5_:* = param1;
-         for each(var _loc2_:* in param1)
-         {
-            if(_loc2_.height > _loc3_)
-            {
-               _loc3_ = _loc2_.height;
-               _loc4_ = _loc2_;
+            return _loc3_ > _loc4_ ? -1 : 1;
+        }
+
+        private static function getNearest2N(nu:uint):uint {
+            return !!(nu & nu - 1) ? 1 << nu.toString(2).length : nu;
+        }
+
+        private static function getHighestArea(rectVec:Vector.<Rectangle>):Rectangle {
+            var maxHRect:* = null;
+            var maxH:uint = 0;
+            for each (var rect:* in rectVec) {
+                if (rect.height > maxH) {
+                    maxH = rect.height;
+                    maxHRect = rect;
+                }
             }
-         }
-         return _loc4_;
-      }
-      
-      private static function getLowestArea(param1:Vector.<Rectangle>) : Rectangle
-      {
-         var _loc4_:* = null;
-         var _loc3_:* = 4294967295;
-         var _loc6_:int = 0;
-         var _loc5_:* = param1;
-         for each(var _loc2_:* in param1)
-         {
-            if(_loc2_.height < _loc3_)
-            {
-               _loc3_ = uint(_loc2_.height);
-               _loc4_ = _loc2_;
+            return maxHRect;
+        }
+
+        private static function getLowestArea(rectVec:Vector.<Rectangle>):Rectangle {
+            var minHRect:* = null;
+            var minH:* = 4294967295;
+            for each (var rect:* in rectVec) {
+                if (rect.height < minH) {
+                    minH = uint(rect.height);
+                    minHRect = rect;
+                }
             }
-         }
-         return _loc4_;
-      }
-   }
+            return minHRect;
+        }
+    }
 }

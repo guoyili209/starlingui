@@ -1,18 +1,18 @@
 package lzm.starling.swf.tool.starling
 {
+    import flash.display.Shape;
     import flash.events.Event;
     import flash.geom.Point;
     import flash.geom.Rectangle;
     import flash.system.Capabilities;
-    
+
     import lzm.starling.STLConstant;
     import lzm.starling.STLMainClass;
     import lzm.starling.STLRootClass;
     import lzm.starling.STLStarup;
-    import lzm.starling.display.Shape;
     import lzm.starling.gestures.DragGestures;
     import lzm.starling.swf.Swf;
-    
+
     import starling.core.Starling;
     import starling.display.DisplayObject;
     import starling.display.Sprite;

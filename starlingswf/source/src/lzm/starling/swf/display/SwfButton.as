@@ -1,6 +1,6 @@
 package lzm.starling.swf.display
 {
-	import lzm.starling.display.Button;
+	import starling.display.Button;
 	
 	import starling.display.DisplayObject;
 	

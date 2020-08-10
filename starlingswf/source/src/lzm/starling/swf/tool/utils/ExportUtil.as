@@ -79,23 +79,23 @@ package lzm.starling.swf.tool.utils {
                 };
                 var exportImages:Function = function():void {
                     var bimapData:* = null;
-                    var _loc18_:* = null;
+                    var colorRect:Rectangle = null;
                     var exportImagesArrIndex:int = 0;
-                    var _loc25_:* = null;
-                    var _loc13_:* = null;
-                    var _loc17_:* = null;
-                    var _loc14_:* = null;
-                    var _loc10_:* = null;
-                    var _loc15_:* = null;
-                    var _loc21_:* = null;
-                    var _loc16_:* = null;
-                    var _loc19_:* = null;
-                    var _loc1_:* = null;
-                    var _loc3_:* = null;
+                    var exportRect:Rectangle = null;
+                    var exportBmpd:BitmapData = null;
+                    var exportXml:XML = null;
+                    var exportJsonObj:Object = null;
+                    var xmlItem:XML = null;
+                    var exportSmallImgName:String = null;
+                    var exportSmallRect:Rectangle = null;
+                    var exportColorRect:Rectangle = null;
+                    var exportSmallImgPt:Point = null;
+                    var clipColorRect:Rectangle = null;
+                    var clipBmpd:BitmapData = null;
                     var fileName:String = file.name.split(".")[0];
                     var savePath:String = _exportPath + "/" + fileName + "/";
-                    var _loc6_:String = savePath + "images/";
-                    var _loc8_:String = savePath + "big_images/";
+                    var saveImagePath:String = savePath + "images/";
+                    var saveBigImgPath:String = savePath + "big_images/";
                     var saveBytes:String = savePath + fileName + ".bytes";
                     saveSwfData(saveBytes, swfUtil.getSwfData(_exportPlatform));
                     var exportImagesArr:Array = swfUtil.exportImages;
@@ -103,116 +103,116 @@ package lzm.starling.swf.tool.utils {
                     if (exportImagesArrLen == 0) {
                         return;
                     }
-                    var _loc9_:Array = [];
-                    var _loc11_:Array = [];
-                    var _loc2_:Array = [];
-                    var _loc24_:Array = [];
-                    var _loc4_:Array = [];
-                    var _loc22_:Object = {};
+                    var tempExportSmallBmpdArr:Array = [];
+                    var tempExportBigBmpdArr:Array = [];
+                    var tempExportColorRectArr:Array = [];
+                    var tempExportSmallImagesArr:Array = [];
+                    var tempExportBigImagesArr:Array = [];
+                    var tempExportSmallImgRectObj:Object = {};
                     exportImagesArrIndex = 0;
                     while (exportImagesArrIndex < exportImagesArrLen) {
                         bimapData = ImageUtil.getBitmapdata(swfUtil.getClass(exportImagesArr[exportImagesArrIndex]), _exportScale);
                         if (_isMerger) {
                             if (isBigImage(bimapData) && !_isMergerBigImage) {
-                                _loc4_.push(exportImagesArr[exportImagesArrIndex]);
-                                _loc11_.push(bimapData);
+                                tempExportBigImagesArr.push(exportImagesArr[exportImagesArrIndex]);
+                                tempExportBigBmpdArr.push(bimapData);
                             } else {
-                                _loc18_ = bimapData.getColorBoundsRect(4278190080, 0, false);
-                                _loc9_.push(bimapData);
-                                _loc2_.push(_loc18_);
-                                _loc24_.push(exportImagesArr[exportImagesArrIndex]);
-                                _loc22_[exportImagesArr[exportImagesArrIndex]] = new Rectangle(0, 0, _loc18_.width, _loc18_.height);
+                                colorRect = bimapData.getColorBoundsRect(4278190080, 0, false);
+                                tempExportSmallBmpdArr.push(bimapData);
+                                tempExportColorRectArr.push(colorRect);
+                                tempExportSmallImagesArr.push(exportImagesArr[exportImagesArrIndex]);
+                                tempExportSmallImgRectObj[exportImagesArr[exportImagesArrIndex]] = new Rectangle(0, 0, colorRect.width, colorRect.height);
                             }
                         } else if (isBigImage(bimapData)) {
-                            _loc4_.push(exportImagesArr[exportImagesArrIndex]);
-                            _loc11_.push(bimapData);
+                            tempExportBigImagesArr.push(exportImagesArr[exportImagesArrIndex]);
+                            tempExportBigBmpdArr.push(bimapData);
                         } else {
-                            _loc24_.push(exportImagesArr[exportImagesArrIndex]);
-                            _loc9_.push(bimapData);
+                            tempExportSmallImagesArr.push(exportImagesArr[exportImagesArrIndex]);
+                            tempExportSmallBmpdArr.push(bimapData);
                         }
                         exportImagesArrIndex++;
                     }
                     if (_isMerger) {
-                        _loc25_ = TextureUtil.packTextures(0, _padding, _loc22_);
-                        if (_loc25_) {
-                            _loc13_ = new BitmapData(_loc25_.width, _loc25_.height, true, 0);
-                            _loc17_ = <TextureAtlas />;
-                            _loc14_ = {"file": fileName + ".png",
+                        exportRect = TextureUtil.packTextures(0, _padding, tempExportSmallImgRectObj);
+                        if (exportRect) {
+                            exportBmpd = new BitmapData(exportRect.width, exportRect.height, true, 0);
+                            exportXml = <TextureAtlas />;
+                            exportJsonObj = {"file": fileName + ".png",
                                     "frames": {}};
-                            _loc16_ = new Rectangle();
-                            _loc19_ = new Point();
-                            exportImagesArrLen = _loc24_.length;
+                            exportColorRect = new Rectangle();
+                            exportSmallImgPt = new Point();
+                            exportImagesArrLen = tempExportSmallImagesArr.length;
                             exportImagesArrIndex = 0;
                             while (exportImagesArrIndex < exportImagesArrLen) {
-                                _loc15_ = _loc24_[exportImagesArrIndex];
-                                _loc21_ = _loc22_[_loc15_];
-                                bimapData = _loc9_[exportImagesArrIndex];
-                                _loc19_.x = _loc21_.x;
-                                _loc19_.y = _loc21_.y;
-                                _loc16_ = _loc2_[exportImagesArrIndex];
+                                exportSmallImgName = tempExportSmallImagesArr[exportImagesArrIndex];
+                                exportSmallRect = tempExportSmallImgRectObj[exportSmallImgName];
+                                bimapData = tempExportSmallBmpdArr[exportImagesArrIndex];
+                                exportSmallImgPt.x = exportSmallRect.x;
+                                exportSmallImgPt.y = exportSmallRect.y;
+                                exportColorRect = tempExportColorRectArr[exportImagesArrIndex];
                                 if (_exportPlatform == "Starling") {
-                                    _loc10_ = <SubTexture />;
-                                    _loc10_.@name = _loc15_;
-                                    _loc10_.@x = _loc19_.x;
-                                    _loc10_.@y = _loc19_.y;
-                                    _loc10_.@width = _loc16_.width;
-                                    _loc10_.@height = _loc16_.height;
-                                    if (_loc16_.width < bimapData.width || _loc16_.height < bimapData.height) {
-                                        _loc10_.@frameX = -_loc16_.x;
-                                        _loc10_.@frameWidth = bimapData.width;
-                                        _loc10_.@frameY = -_loc16_.y;
-                                        _loc10_.@frameHeight = bimapData.height;
+                                    xmlItem = <SubTexture />;
+                                    xmlItem.@name = exportSmallImgName;
+                                    xmlItem.@x = exportSmallImgPt.x;
+                                    xmlItem.@y = exportSmallImgPt.y;
+                                    xmlItem.@width = exportColorRect.width;
+                                    xmlItem.@height = exportColorRect.height;
+                                    if (exportColorRect.width < bimapData.width || exportColorRect.height < bimapData.height) {
+                                        xmlItem.@frameX = -exportColorRect.x;
+                                        xmlItem.@frameWidth = bimapData.width;
+                                        xmlItem.@frameY = -exportColorRect.y;
+                                        xmlItem.@frameHeight = bimapData.height;
                                     }
-                                    _loc17_.appendChild(_loc10_);
+                                    exportXml.appendChild(xmlItem);
                                 }
-                                _loc13_.copyPixels(bimapData, _loc16_, _loc19_);
+                                exportBmpd.copyPixels(bimapData, exportColorRect, exportSmallImgPt);
                                 exportImagesArrIndex++;
                             }
                             if (_isAnySize) {
-                                _loc1_ = _loc13_.getColorBoundsRect(4278190080, 0, false);
-                                _loc1_.height = _loc1_.height + 1;
-                                _loc1_.width = _loc1_.width + 1;
-                                _loc3_ = new BitmapData(_loc1_.width, _loc1_.height, true, 0);
-                                _loc3_.copyPixels(_loc13_, _loc1_, new Point(0, 0));
-                                saveImage(savePath + fileName + ".png", _loc3_);
+                                clipColorRect = exportBmpd.getColorBoundsRect(4278190080, 0, false);
+                                clipColorRect.height = clipColorRect.height + 1;
+                                clipColorRect.width = clipColorRect.width + 1;
+                                clipBmpd = new BitmapData(clipColorRect.width, clipColorRect.height, true, 0);
+                                clipBmpd.copyPixels(exportBmpd, clipColorRect, new Point(0, 0));
+                                saveImage(savePath + fileName + ".png", clipBmpd);
                             } else {
-                                saveImage(savePath + fileName + ".png", _loc13_);
+                                saveImage(savePath + fileName + ".png", exportBmpd);
                             }
                             if (_exportPlatform == "Starling") {
-                                _loc17_.@imagePath = fileName + ".png";
-                                saveXml(savePath + fileName + ".xml", _loc17_.toXMLString());
+                                exportXml.@imagePath = fileName + ".png";
+                                saveXml(savePath + fileName + ".xml", exportXml.toXMLString());
                             } else if (_exportPlatform == "Egret") {
-                                saveXml(savePath + fileName + ".json", JSON.stringify(_loc14_));
+                                saveXml(savePath + fileName + ".json", JSON.stringify(exportJsonObj));
                             }
                         }
                     } else {
-                        exportImagesArrLen = _loc24_.length;
+                        exportImagesArrLen = tempExportSmallImagesArr.length;
                         exportImagesArrIndex = 0;
                         while (exportImagesArrIndex < exportImagesArrLen) {
-                            saveImage(_loc6_ + _loc24_[exportImagesArrIndex] + ".png", _loc9_[exportImagesArrIndex]);
+                            saveImage(saveImagePath + tempExportSmallImagesArr[exportImagesArrIndex] + ".png", tempExportSmallBmpdArr[exportImagesArrIndex]);
                             exportImagesArrIndex++;
                         }
                     }
-                    exportImagesArrLen = _loc4_.length;
+                    exportImagesArrLen = tempExportBigImagesArr.length;
                     exportImagesArrIndex = 0;
                     while (exportImagesArrIndex < exportImagesArrLen) {
-                        saveImage(_loc8_ + _loc4_[exportImagesArrIndex] + ".png", _loc11_[exportImagesArrIndex]);
+                        saveImage(saveBigImgPath + tempExportBigImagesArr[exportImagesArrIndex] + ".png", tempExportBigBmpdArr[exportImagesArrIndex]);
                         exportImagesArrIndex++;
                     }
                 };
 
-                var getBitmapDatas:Function = function(param1:Array):void {
-                    var _loc2_:* = null;
-                    var _loc6_:int = 0;
+                var getBitmapDatas:Function = function(arr:Array):void {
+                    var bmpd:* = null;
+                    var index:int = 0;
                     var _loc3_:Array = [];
                     var _loc4_:Array = [];
-                    var _loc5_:int = param1.length;
-                    _loc6_ = 0;
-                    while (_loc6_ < _loc5_) {
-                        _loc2_ = ImageUtil.getBitmapdata(swfUtil.getClass(param1[_loc6_]), _exportScale);
-                        _loc3_.push(_loc2_);
-                        _loc4_.push(param1[_loc6_]);
-                        _loc6_++;
+                    var _loc5_:int = arr.length;
+                    index = 0;
+                    while (index < _loc5_) {
+                        bmpd = ImageUtil.getBitmapdata(swfUtil.getClass(arr[index]), _exportScale);
+                        _loc3_.push(bmpd);
+                        _loc4_.push(arr[index]);
+                        index++;
                     }
                 };
                 var loader:Loader = new Loader();
