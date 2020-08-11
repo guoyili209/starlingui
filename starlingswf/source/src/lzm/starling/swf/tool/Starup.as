@@ -66,13 +66,13 @@ package lzm.starling.swf.tool {
             Loading.init(stage);
         }
 
-        private function onRefresh(param1:UIEvent):void {
+        private function onRefresh(e:UIEvent):void {
             hidePropertyPanel();
             _starlingStarup.clear();
         }
 
-        private function onIsDrag(param1:UIEvent):void {
-            _starlingStarup.setDrag(param1.data.value);
+        private function onIsDrag(e:UIEvent):void {
+            _starlingStarup.setDrag(e.data.value);
         }
 
         private function onSelectImage(param1:UIEvent):void {

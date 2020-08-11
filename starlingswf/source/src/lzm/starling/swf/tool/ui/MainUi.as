@@ -215,10 +215,10 @@ package lzm.starling.swf.tool.ui {
             Starling.current.stage.color = _loc2_;
         }
 
-        public function onIsDrag(param1:Event):void {
-            var _loc2_:UIEvent = new UIEvent("onIsDrag");
-            _loc2_.data = {"value": (uiConfig.getCompById("isDrag") as CheckBox).selected};
-            dispatchEvent(_loc2_);
+        public function onIsDrag(e:Event):void {
+            var eventDrag:UIEvent = new UIEvent("onIsDrag");
+            eventDrag.data = {"value": (uiConfig.getCompById("isDrag") as CheckBox).selected};
+            dispatchEvent(eventDrag);
         }
 
         public function onFpsChange(param1:Event):void {

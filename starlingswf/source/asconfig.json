@@ -3,7 +3,8 @@
     "compilerOptions": {
         "source-path": [
             "src",
-            "libs"
+            "libs",
+            "extendLibs"
         ],
         "output": "bin/StarlingUIEditor.swf",
         "debug": true
