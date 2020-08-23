@@ -52,9 +52,12 @@ package lzm.starling.swf.tool {
 //         _mainUi.addEventListener("selectShapeImage",onSelectShapeImage);
             _mainUi.addEventListener("selectComponents", onSelectComponents);
             addChild(_mainUi);
-
-
-
+            _movieClipProUi = new MovieClipPropertyUi();
+            _movieClipProUi.x = 864;
+            _movieClipProUi.y = 120;
+            _componentPropertyUI = new ComponentPropertyUI();
+            _componentPropertyUI.x = 794;
+            _componentPropertyUI.y = 120;
         }
 
         private function init():void {

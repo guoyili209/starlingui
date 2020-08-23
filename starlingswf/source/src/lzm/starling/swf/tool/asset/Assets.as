@@ -7,28 +7,28 @@ package lzm.starling.swf.tool.asset
    import lzm.starling.swf.tool.utils.SwfUtil;
    import lzm.util.HttpClient;
    import starling.assets.AssetManager;
-   
+
    public class Assets
    {
-      
+
       public static var swfUtil:SwfUtil;
-      
+
       public static var componentsAsset:ComponentsAsset;
-      
+
       public static var swf:Swf;
-      
+
       public static var asset:AssetManager;
-      
+
       private static var tempFileUrl:String;
-      
+
       private static var tempMovieClipData:Object;
-       
-      
+
+
       public function Assets()
       {
          super();
       }
-      
+
       public static function init() : void
       {
          swfUtil = new SwfUtil();
@@ -38,13 +38,13 @@ package lzm.starling.swf.tool.asset
          }
          asset = new AssetManager(1);
       }
-      
+
       public static function initComponensAsset() : void
       {
          componentsAsset = new ComponentsAsset();
          componentsAsset.loadComponents();
       }
-      
+
       public static function openTempFile(fileName:String, callBack:Function) : void
       {
          var file:File = new File(fileName.replace(".swf",".data"));
@@ -62,18 +62,18 @@ package lzm.starling.swf.tool.asset
             callBack();
          }
       }
-      
+
       public static function putTempData(param1:String, param2:Object) : void
       {
          tempMovieClipData[param1] = param2;
          writeTempFile();
       }
-      
+
       public static function getTempData(param1:String) : Object
       {
          return tempMovieClipData[param1];
       }
-      
+
       private static function writeTempFile() : void
       {
          var _loc3_:ByteArray = new ByteArray();
