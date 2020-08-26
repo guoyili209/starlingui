@@ -71,15 +71,15 @@ package starling.assets
      *  <listing>
      *  var appDir:File = File.applicationDirectory;
      *  var assets:AssetManager = new AssetManager();
-     *  
+     *
      *  assets.textureOptions.format = Context3DTextureFormat.BGRA;
      *  assets.enqueue(appDir.resolvePath("textures/32bit"));
-     *  
+     *
      *  assets.textureOptions.format = Context3DTextureFormat.BGRA_PACKED;
      *  assets.enqueue(appDir.resolvePath("textures/16bit"));
-     *  
+     *
      *  assets.loadQueue(...);</listing>
-     * 
+     *
      *  <strong>Nesting</strong>
      *
      *  <p>When you enqueue one or more AssetManagers to another one, the "loadQueue" method will
@@ -95,17 +95,17 @@ package starling.assets
      *  <listing>
      *  var manager:AssetManager = new AssetManager();
      *  var appDir:File = File.applicationDirectory;
-     *  
+     *
      *  var redAssets:AssetManager = new AssetManager();
      *  redAssets.enqueueSingle(appDir.resolvePath("textures/red/"));
-     *  
+     *
      *  var greenAssets:AssetManager = new AssetManager();
      *  greenAssets.enqueueSingle(appDir.resolvePath("textures/green/"));
-     *  
+     *
      *  manager.enqueueSingle(redAssets, "redAssets");
      *  manager.enqueueSingle(greenAssets, "greenAssets");
      *  manager.loadQueue(...); // loads both "red" and "green" assets
-     *  
+     *
      *  // ... later, remove all "red" assets together
      *  manager.removeAssetManager("redAssets");</listing>
      *

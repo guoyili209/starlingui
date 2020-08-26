@@ -20,8 +20,11 @@ package lzm.starling.swf.tool.ui {
     import lzm.starling.swf.tool.utils.ExportUtil;
     import lzm.starling.swf.tool.utils.SysUtils;
     import lzm.starling.swf.tool.utils.Util;
+    import lzm.starling.swf.tool.utils.ImageUtil;
 
     import starling.core.Starling;
+    import starling.assets.AssetType;
+    import starling.textures.Texture;
 
     public class MainUi extends BaseUI {
 
@@ -131,7 +134,7 @@ package lzm.starling.swf.tool.ui {
             index = 0;
             while (index < len) {
                 imgName = Assets.swfUtil.exportImages[index];
-//                Assets.asset.addTexture(imgName, Texture.fromBitmapData(ImageUtil.getBitmapdata(Assets.swfUtil.getClass(imgName), 1)));
+               Assets.asset.addAsset(imgName, Texture.fromBitmapData(ImageUtil.getBitmapdata(Assets.swfUtil.getClass(imgName), 1)),AssetType.TEXTURE);
                 index++;
             }
             Assets.swfUtil.imageNames.sort();
@@ -263,5 +266,7 @@ package lzm.starling.swf.tool.ui {
             }
             addChild(_atfTool);
         }
+
+        public var AssetsType:Object;
     }
 }
