@@ -134,7 +134,7 @@ package lzm.starling.swf.tool.ui {
             index = 0;
             while (index < len) {
                 imgName = Assets.swfUtil.exportImages[index];
-               Assets.asset.addAsset(imgName, Texture.fromBitmapData(ImageUtil.getBitmapdata(Assets.swfUtil.getClass(imgName), 1)),AssetType.TEXTURE);
+                Assets.asset.addAsset(imgName, Texture.fromBitmapData(ImageUtil.getBitmapdata(Assets.swfUtil.getClass(imgName), 1)), AssetType.TEXTURE);
                 index++;
             }
             Assets.swfUtil.imageNames.sort();

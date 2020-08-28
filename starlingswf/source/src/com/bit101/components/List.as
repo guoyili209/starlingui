@@ -131,7 +131,7 @@ package com.bit101.components
             var numItems:int = Math.ceil(_height / _listItemHeight);
 			numItems = Math.min(numItems, _items.length);
 			
-			try {
+			
 			for(var i:int = 0; i < numItems; i++)
 			{
 				var item:ListItem = _itemHolder.getChildAt(i) as ListItem;
@@ -159,12 +159,7 @@ package com.bit101.components
 				{
 					item.selected = false;
 				}
-			}
-			}
-			catch (e:Error)
-			{
-				//trace(e);
-			}
+			}			
         }
 		
 		/**
@@ -437,6 +432,7 @@ package com.bit101.components
 		public function set items(value:Array):void
 		{
 			_items = value;
+			this.makeListItems();
 			invalidate();
 		}
 		public function get items():Array

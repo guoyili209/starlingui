@@ -55,7 +55,7 @@ package lzm.starling.swf.tool.ui {
             _bigImageWidth = uiConfig.getCompById("bigImageWidth") as InputText;
             _bigImageHeight = uiConfig.getCompById("bigImageHeight") as InputText;
             _exportPlatform = uiConfig.getCompById("exportPlatform") as ComboBox;
-            _exportPlatform.items = ["Starling", "Egret"];
+            _exportPlatform.items = ["Starling"];
             _exportPlatform.selectedIndex = 0;
             _bgSprite = new Sprite();
             _bgSprite.graphics.beginFill(0, 0.7);
